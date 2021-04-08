@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using FFImageLoading.Forms.Platform;
 using Foundation;
 using UIKit;
 
@@ -23,7 +22,7 @@ namespace Nindo.Mobile.iOS
             global::Xamarin.Forms.Forms.SetFlags("CollectionView_Experimental");
             global::Xamarin.Forms.Forms.Init();
 
-            FFImageLoading.Forms.Platform.CachedImageRenderer.Init();
+            CachedImageRenderer.Init();
 
             LoadApplication(new App());
 

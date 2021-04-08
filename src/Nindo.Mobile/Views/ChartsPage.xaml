@@ -4,8 +4,66 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Nindo.Mobile.Views.ChartsPage"
              xmlns:viewModels="clr-namespace:Nindo.Mobile.ViewModels;assembly=Nindo.Mobile"
+             xmlns:pancakeView="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView"
+             xmlns:xct="http://xamarin.com/schemas/2020/toolkit"
+             x:DataType="viewModels:ChartsViewModel"
              Title="{Binding Title}">
     <ContentPage.Content>
-        <Label>Charts</Label>
+        <Grid>
+            <StackLayout Padding="20">
+                <Picker x:Name="picker"
+                        Title="Select a Filter"
+                        TextColor="Black" >
+                    <Picker.ItemsSource>
+                        <x:Array Type="{x:Type x:String}">
+                            <x:String>Baboon</x:String>
+                            <x:String>Capuchin Monkey</x:String>
+                            <x:String>Blue Monkey</x:String>
+                            <x:String>Squirrel Monkey</x:String>
+                            <x:String>Golden Lion Tamarin</x:String>
+                            <x:String>Howler Monkey</x:String>
+                            <x:String>Japanese Macaque</x:String>
+                        </x:Array>
+                    </Picker.ItemsSource>
+                </Picker>
+
+            </StackLayout>
+
+
+            <pancakeView:PancakeView HorizontalOptions="End" VerticalOptions="End" Margin="30" CornerRadius="40" Padding="15"
+                                     BackgroundColor="{StaticResource Primary}">
+                <xct:Expander HorizontalOptions="Start" VerticalOptions="End" Rotation="180"
+                                  ExpandAnimationLength="90" CollapseAnimationLength="90">
+                    <xct:Expander.Header>
+                        <Image Source="filter.png" WidthRequest="30" HeightRequest="30" Rotation="180">
+                            <Image.Triggers>
+                                <DataTrigger TargetType="Image"
+                                             Binding="{Binding Source={RelativeSource AncestorType={x:Type xct:Expander}}, Path=IsExpanded}"
+                                             Value="True">
+                                    <Setter Property="Source" Value="close_white.png" />
+                                </DataTrigger>
+                            </Image.Triggers>
+                        </Image>
+                    </xct:Expander.Header>
+                    <StackLayout Spacing="30" Margin="0,20">
+                        <ImageButton Source="youtube_white.png" WidthRequest="30" HeightRequest="30" Rotation="180"
+                                     BackgroundColor="Transparent" 
+                                     CommandParameter="youtube" />
+                        <ImageButton Source="instagram_white.png" WidthRequest="30" HeightRequest="30" Rotation="180"
+                                     BackgroundColor="Transparent" 
+                                     CommandParameter="instagram" />
+                        <ImageButton Source="tiktok_white.png" WidthRequest="30" HeightRequest="30" Rotation="180"
+                                     BackgroundColor="Transparent" 
+                                     CommandParameter="tiktok" />
+                        <ImageButton Source="twitter_white.png" WidthRequest="30" HeightRequest="30" Rotation="180"
+                                     BackgroundColor="Transparent" 
+                                     CommandParameter="twitter" />
+                        <ImageButton Source="twitch_white.png" WidthRequest="30" HeightRequest="30" Rotation="180"
+                                     BackgroundColor="Transparent" 
+                                     CommandParameter="twitch" />
+                    </StackLayout>
+                </xct:Expander>
+            </pancakeView:PancakeView>
+        </Grid>
     </ContentPage.Content>
 </ContentPage>
