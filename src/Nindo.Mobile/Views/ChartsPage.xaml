@@ -13,20 +13,9 @@
             <StackLayout Padding="20">
                 <Picker x:Name="picker"
                         Title="Select a Filter"
-                        TextColor="Black" >
-                    <Picker.ItemsSource>
-                        <x:Array Type="{x:Type x:String}">
-                            <x:String>Baboon</x:String>
-                            <x:String>Capuchin Monkey</x:String>
-                            <x:String>Blue Monkey</x:String>
-                            <x:String>Squirrel Monkey</x:String>
-                            <x:String>Golden Lion Tamarin</x:String>
-                            <x:String>Howler Monkey</x:String>
-                            <x:String>Japanese Macaque</x:String>
-                        </x:Array>
-                    </Picker.ItemsSource>
-                </Picker>
-
+                        TextColor="Black" 
+                        ItemsSource="{Binding Items}"
+                        ItemDisplayBinding="{Binding FilterTitle}"/>
             </StackLayout>
 
 
@@ -47,19 +36,19 @@
                     </xct:Expander.Header>
                     <StackLayout Spacing="30" Margin="0,20">
                         <ImageButton Source="youtube_white.png" WidthRequest="30" HeightRequest="30" Rotation="180"
-                                     BackgroundColor="Transparent" 
+                                     BackgroundColor="Transparent" Command="{Binding ChangePlatformCommand}"
                                      CommandParameter="youtube" />
                         <ImageButton Source="instagram_white.png" WidthRequest="30" HeightRequest="30" Rotation="180"
-                                     BackgroundColor="Transparent" 
+                                     BackgroundColor="Transparent" Command="{Binding ChangePlatformCommand}"
                                      CommandParameter="instagram" />
                         <ImageButton Source="tiktok_white.png" WidthRequest="30" HeightRequest="30" Rotation="180"
-                                     BackgroundColor="Transparent" 
+                                     BackgroundColor="Transparent" Command="{Binding ChangePlatformCommand}"
                                      CommandParameter="tiktok" />
                         <ImageButton Source="twitter_white.png" WidthRequest="30" HeightRequest="30" Rotation="180"
-                                     BackgroundColor="Transparent" 
+                                     BackgroundColor="Transparent" Command="{Binding ChangePlatformCommand}"
                                      CommandParameter="twitter" />
                         <ImageButton Source="twitch_white.png" WidthRequest="30" HeightRequest="30" Rotation="180"
-                                     BackgroundColor="Transparent" 
+                                     BackgroundColor="Transparent" Command="{Binding ChangePlatformCommand}"
                                      CommandParameter="twitch" />
                     </StackLayout>
                 </xct:Expander>
