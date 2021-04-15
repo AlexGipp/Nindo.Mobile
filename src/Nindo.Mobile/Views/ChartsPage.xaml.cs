@@ -1,4 +1,5 @@
-﻿using Nindo.Mobile.Services.Implementations;
+﻿using System.Diagnostics;
+using Nindo.Mobile.Services.Implementations;
 using Nindo.Mobile.ViewModels;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -17,6 +18,13 @@ namespace Nindo.Mobile.Views
         protected override void OnAppearing()
         {
             base.OnAppearing();
+
+            if (BindingContext is ChartsViewModel vm && vm.ResultItems.Count == 0)
+                vm.LoadDefaultData()
+                    .ContinueWith(t =>
+                    {
+                        if (t.IsFaulted) Debug.WriteLine(t.Exception?.Message);
+                    });
         }
     }
 }

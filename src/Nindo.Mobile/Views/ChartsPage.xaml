@@ -10,6 +10,7 @@
              x:DataType="viewModels:ChartsViewModel"
              xmlns:nindo="clr-namespace:Nindo.Net.Models;assembly=Nindo.Net"
              xmlns:converters="clr-namespace:Nindo.Mobile.Converters;assembly=Nindo.Mobile"
+             Shell.NavBarHasShadow="False"
              Title="{Binding Title}">
 
     <ContentPage.Resources>
@@ -19,20 +20,31 @@
     <ContentPage.Content>
         <Grid>
             <StackLayout>
-                <Picker x:Name="Picker"
-                        Margin="20"
-                        Title="Select a Filter"
-                        TextColor="Black" 
-                        ItemsSource="{Binding FilterItems}"
-                        ItemDisplayBinding="{Binding FilterTitle}">
-                    <Picker.Behaviors>
-                        <xct:EventToCommandBehavior
-                            EventName="SelectedIndexChanged"
-                            Command="{Binding ChangeFilterCommand}"
-                            CommandParameter="{Binding Source={x:Reference Picker}, Path=SelectedItem}"/>
-                    </Picker.Behaviors>
-                </Picker>
+                <StackLayout BackgroundColor="{StaticResource Primary}">
+                    <Picker x:Name="Picker"
+                            Margin="20"
+                            Title="Select a Filter"
+                            BackgroundColor="{StaticResource Primary}"
+                            ItemsSource="{Binding FilterItems}"
+                            ItemDisplayBinding="{Binding FilterTitle}"
+                            SelectedItem="{Binding SelectedPickerItem}">
+                        <Picker.Behaviors>
+                            <xct:EventToCommandBehavior
+                                EventName="SelectedIndexChanged"
+                                Command="{Binding ChangeFilterCommand}"
+                                CommandParameter="{Binding Source={x:Reference Picker}, Path=SelectedItem}"/>
+                        </Picker.Behaviors>
+                    </Picker>
+                </StackLayout>
                 <CollectionView ItemsSource="{Binding ResultItems}">
+                    <CollectionView.Header>
+                        <Label Grid.Row="3" 
+                               Text="{Binding CollectionViewHeaderText}"
+                               Grid.ColumnSpan="3"
+                               TextColor="#ababab"
+                               HorizontalTextAlignment="End" 
+                               Padding="0,0,10,10" />
+                    </CollectionView.Header>
                     <CollectionView.ItemTemplate>
                         <DataTemplate>
                             <Frame BorderColor="#eeeeee" Padding="0" x:DataType="nindo:Rank">

@@ -1,14 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
-using System.Windows.Input;
 using Nindo.Common.Common;
 using Nindo.Mobile.Models;
 using Nindo.Mobile.Services;
 using Nindo.Net.Models;
 using Nindo.Net.Models.Enums;
 using Xamarin.CommunityToolkit.ObjectModel;
-using Xamarin.Forms;
 using Size = Nindo.Net.Models.Enums.Size;
 
 namespace Nindo.Mobile.ViewModels
@@ -19,7 +18,7 @@ namespace Nindo.Mobile.ViewModels
 
         #region commands
 
-        public ICommand ChangePlatformCommand { get; }
+        public IAsyncCommand<string> ChangePlatformCommand { get; }
         public IAsyncCommand<ChartsFilter> ChangeFilterCommand { get; }
 
         #endregion
@@ -29,7 +28,7 @@ namespace Nindo.Mobile.ViewModels
             _apiService = apiService;
             Title = "Nindo";
 
-            ChangePlatformCommand = new Command<string>(ChangePlatform, CanExecute);
+            ChangePlatformCommand = new AsyncCommand<string>(ChangePlatform, CanExecute);
             ChangeFilterCommand = new AsyncCommand<ChartsFilter>(ChangeFilterAsync, CanExecute);
 
             ResultItems = new RangeObservableCollection<Rank>();
@@ -39,26 +38,31 @@ namespace Nindo.Mobile.ViewModels
                 new ChartsFilter
                 {
                     FilterTitle = "Views",
+                    HeaderText = "Ø nach 5 Tagen",
                     FilterMethod = async () => await _apiService.GetViewsScoreboardAsync(RankViewsPlatform.Youtube, Size.Big),
                 },
                 new ChartsFilter
                 {
                     FilterTitle = "Likes",
+                    HeaderText = "Ø nach 5 Tagen",
                     FilterMethod = async () => await _apiService.GetLikesScoreboardAsync(RankLikesPlatform.Youtube, Size.Big),
                 },
                 new ChartsFilter
                 {
                     FilterTitle = "Neue Abos",
+                    HeaderText = "Zuwachs in den letzten 30 Tagen",
                     FilterMethod = async () => await _apiService.GetSubGainScoreboardAsync(RankAllPlatform.Youtube, Size.Big),
                 },
                 new ChartsFilter
                 {
                     FilterTitle = "Abos",
+                    HeaderText = string.Empty,
                     FilterMethod = async () => await _apiService.GetSubscribersAsync(RankAllPlatform.Youtube, Size.Big),
                 },
                 new ChartsFilter
                 {
                     FilterTitle = "YouTube-Rang",
+                    HeaderText = "Berechnet sich aus allen Chart-Platzierungen",
                     FilterMethod = async () => await _apiService.GetScoreboardAsync(RankAllPlatform.Youtube, Size.Big),
                 }
             };
@@ -67,44 +71,25 @@ namespace Nindo.Mobile.ViewModels
                 new ChartsFilter
                 {
                     FilterTitle = "Likes",
+                    HeaderText = "Ø nach 5 Tagen",
                     FilterMethod = async () => await _apiService.GetLikesScoreboardAsync(RankLikesPlatform.Instagram, Size.Big),
                 },
                 new ChartsFilter
                 {
                     FilterTitle = "Neue Follower",
+                    HeaderText = "Zuwachs in den letzten 30 Tagen",
                     FilterMethod = async () => await _apiService.GetSubGainScoreboardAsync(RankAllPlatform.Instagram, Size.Big),
                 },
                 new ChartsFilter
                 {
                     FilterTitle = "Follower",
+                    HeaderText = string.Empty,
                     FilterMethod = async () => await _apiService.GetSubscribersAsync(RankAllPlatform.Instagram, Size.Big),
                 },
                 new ChartsFilter
                 {
                     FilterTitle = "Instagram-Rang",
-                    FilterMethod = async () => await _apiService.GetScoreboardAsync(RankAllPlatform.Instagram, Size.Big),
-                },
-            };
-            InstagramFilters = new List<ChartsFilter>
-            {
-                new ChartsFilter
-                {
-                    FilterTitle = "Likes",
-                    FilterMethod = async () => await _apiService.GetLikesScoreboardAsync(RankLikesPlatform.Instagram, Size.Big),
-                },
-                new ChartsFilter
-                {
-                    FilterTitle = "Neue Follower",
-                    FilterMethod = async () => await _apiService.GetSubGainScoreboardAsync(RankAllPlatform.Instagram, Size.Big),
-                },
-                new ChartsFilter
-                {
-                    FilterTitle = "Follower",
-                    FilterMethod = async () => await _apiService.GetSubscribersAsync(RankAllPlatform.Instagram, Size.Big),
-                },
-                new ChartsFilter
-                {
-                    FilterTitle = "Instagram-Rang",
+                    HeaderText = "Berechnet sich aus allen Chart-Platzierungen",
                     FilterMethod = async () => await _apiService.GetScoreboardAsync(RankAllPlatform.Instagram, Size.Big),
                 },
             };
@@ -113,21 +98,25 @@ namespace Nindo.Mobile.ViewModels
                 new ChartsFilter
                 {
                     FilterTitle = "Likes",
+                    HeaderText = "Ø nach 5 Tagen",
                     FilterMethod = async () => await _apiService.GetLikesScoreboardAsync(RankLikesPlatform.TikTok, Size.Big),
                 },
                 new ChartsFilter
                 {
                     FilterTitle = "Views",
+                    HeaderText = "Ø nach 5 Tagen",
                     FilterMethod = async () => await _apiService.GetViewsScoreboardAsync(RankViewsPlatform.TikTok, Size.Big),
                 },
                 new ChartsFilter
                 {
                     FilterTitle = "Follower",
+                    HeaderText = string.Empty,
                     FilterMethod = async () => await _apiService.GetSubscribersAsync(RankAllPlatform.TikTok, Size.Big),
                 },
                 new ChartsFilter
                 {
                     FilterTitle = "Tiktok-Rang",
+                    HeaderText = "Berechnet sich aus allen Chart-Platzierungen",
                     FilterMethod = async () => await _apiService.GetScoreboardAsync(RankAllPlatform.TikTok, Size.Big),
                 },
             };
@@ -136,26 +125,31 @@ namespace Nindo.Mobile.ViewModels
                 new ChartsFilter
                 {
                     FilterTitle = "Likes",
+                    HeaderText = "Ø nach 5 Tagen",
                     FilterMethod = async () => await _apiService.GetLikesScoreboardAsync(RankLikesPlatform.Twitter, Size.Big),
                 },
                 new ChartsFilter
                 {
                     FilterTitle = "Retweets",
+                    HeaderText = "Ø nach 5 Tagen",
                     FilterMethod = async () => await _apiService.GetRetweetsScoreboardAsync(Size.Big),
                 },
                 new ChartsFilter
                 {
                     FilterTitle = "Neue Follower",
+                    HeaderText = "Zuwachs in den letzten 30 Tagen",
                     FilterMethod = async () => await _apiService.GetSubGainScoreboardAsync(RankAllPlatform.Twitter, Size.Big),
                 },
                 new ChartsFilter
                 {
                     FilterTitle = "Follower",
+                    HeaderText = string.Empty,
                     FilterMethod = async () => await _apiService.GetSubscribersAsync(RankAllPlatform.Twitter, Size.Big),
                 },
                 new ChartsFilter
                 {
                     FilterTitle = "Twitter-Rang",
+                    HeaderText = "Berechnet sich aus allen Chart-Platzierungen",
                     FilterMethod = async () => await _apiService.GetScoreboardAsync(RankAllPlatform.Twitter, Size.Big),
                 },
             };
@@ -164,37 +158,52 @@ namespace Nindo.Mobile.ViewModels
                 new ChartsFilter
                 {
                     FilterTitle = "Viewer",
+                    HeaderText = "Ø in den letzten 30 Tagen",
                     FilterMethod = async () => await _apiService.GetViewersScoreboardAsync(Size.Big),
                 },
                 new ChartsFilter
                 {
                     FilterTitle = "Peak Viewer",
+                    HeaderText = "Höchstwert der letzten 30 Tage",
                     FilterMethod = async () => await _apiService.GetPeakViewersScoreboardAsync(Size.Big),
                 },
                 new ChartsFilter
                 {
                     FilterTitle = "Neue Follower",
+                    HeaderText = "Zuwachs in den letzten 30 Tage",
                     FilterMethod = async () => await _apiService.GetSubGainScoreboardAsync(RankAllPlatform.Twitch, Size.Big),
                 },
                 new ChartsFilter
                 {
                     FilterTitle = "Watchtime",
+                    HeaderText = "Summe der letzten 30 Tage",
                     FilterMethod = async () => await _apiService.GetWatchtimeScoreboardAsync(Size.Big),
                 },
                 new ChartsFilter
                 {
                     FilterTitle = "Follower",
+                    HeaderText = string.Empty,
                     FilterMethod = async () => await _apiService.GetSubscribersAsync(RankAllPlatform.Twitch, Size.Big),
                 },
                 new ChartsFilter
                 {
                     FilterTitle = "Twitch-Rang",
+                    HeaderText = "Berechnet sich aus allen Chart-Platzierungen",
                     FilterMethod = async () => await _apiService.GetScoreboardAsync(RankAllPlatform.Twitch, Size.Big),
                 },
             };
         }
 
-        private void ChangePlatform(string platform)
+        public async Task LoadDefaultData()
+        {
+            if (YoutubeFilters != null)
+            {
+                await ChangePlatform("youtube");
+                await ChangeFilterAsync(YoutubeFilters.First());
+            }
+        }
+
+        private async Task ChangePlatform(string platform)
         {
             try
             {
@@ -207,26 +216,41 @@ namespace Nindo.Mobile.ViewModels
                     case "youtube":
                         FilterItems.Clear();
                         FilterItems.AddRange(YoutubeFilters);
+
+                        await ChangeFilterAsync(YoutubeFilters.First());
+
                         CurrentPlatform = "youtube";
                         break;
                     case "instagram":
                         FilterItems.Clear();
                         FilterItems.AddRange(InstagramFilters);
+
+                        await ChangeFilterAsync(InstagramFilters.First());
+
                         CurrentPlatform = "instagram";
                         break;
                     case "tiktok":
                         FilterItems.Clear();
                         FilterItems.AddRange(TiktokFilters);
+
+                        await ChangeFilterAsync(TiktokFilters.First());
+
                         CurrentPlatform = "tiktok";
                         break;
                     case "twitter":
                         FilterItems.Clear();
                         FilterItems.AddRange(TwitterFilters);
+
+                        await ChangeFilterAsync(TwitterFilters.First());
+
                         CurrentPlatform = "twitter";
                         break;
                     case "twitch":
                         FilterItems.Clear();
                         FilterItems.AddRange(TwitchFilters);
+
+                        await ChangeFilterAsync(TwitchFilters.First());
+
                         CurrentPlatform = "twitch";
                         break;
                     default:
@@ -246,7 +270,9 @@ namespace Nindo.Mobile.ViewModels
                 IsBusy = true;
 
                 ResultItems.Clear();
+                SelectedPickerItem = selectedFilter;
                 ResultItems.AddRange(await selectedFilter.FilterMethod());
+                CollectionViewHeaderText = selectedFilter.HeaderText;
             }
             finally
             {
@@ -346,6 +372,30 @@ namespace Nindo.Mobile.ViewModels
             set
             {
                 _resultItems = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private ChartsFilter _selectedPickerItem;
+
+        public ChartsFilter SelectedPickerItem
+        {
+            get => _selectedPickerItem;
+            set
+            {
+                _selectedPickerItem = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private string _collectionViewHeaderText;
+
+        public string CollectionViewHeaderText
+        {
+            get => _collectionViewHeaderText;
+            set
+            {
+                _collectionViewHeaderText = value;
                 OnPropertyChanged();
             }
         }
