@@ -85,6 +85,113 @@ namespace Nindo.Mobile.ViewModels
                     FilterMethod = async () => await _apiService.GetScoreboardAsync(RankAllPlatform.Instagram, Size.Big),
                 },
             };
+            InstagramFilters = new List<ChartsFilter>
+            {
+                new ChartsFilter
+                {
+                    FilterTitle = "Likes",
+                    FilterMethod = async () => await _apiService.GetLikesScoreboardAsync(RankLikesPlatform.Instagram, Size.Big),
+                },
+                new ChartsFilter
+                {
+                    FilterTitle = "Neue Follower",
+                    FilterMethod = async () => await _apiService.GetSubGainScoreboardAsync(RankAllPlatform.Instagram, Size.Big),
+                },
+                new ChartsFilter
+                {
+                    FilterTitle = "Follower",
+                    FilterMethod = async () => await _apiService.GetSubscribersAsync(RankAllPlatform.Instagram, Size.Big),
+                },
+                new ChartsFilter
+                {
+                    FilterTitle = "Instagram-Rang",
+                    FilterMethod = async () => await _apiService.GetScoreboardAsync(RankAllPlatform.Instagram, Size.Big),
+                },
+            };
+            TiktokFilters = new List<ChartsFilter>
+            {
+                new ChartsFilter
+                {
+                    FilterTitle = "Likes",
+                    FilterMethod = async () => await _apiService.GetLikesScoreboardAsync(RankLikesPlatform.TikTok, Size.Big),
+                },
+                new ChartsFilter
+                {
+                    FilterTitle = "Views",
+                    FilterMethod = async () => await _apiService.GetViewsScoreboardAsync(RankViewsPlatform.TikTok, Size.Big),
+                },
+                new ChartsFilter
+                {
+                    FilterTitle = "Follower",
+                    FilterMethod = async () => await _apiService.GetSubscribersAsync(RankAllPlatform.TikTok, Size.Big),
+                },
+                new ChartsFilter
+                {
+                    FilterTitle = "Tiktok-Rang",
+                    FilterMethod = async () => await _apiService.GetScoreboardAsync(RankAllPlatform.TikTok, Size.Big),
+                },
+            };
+            TwitterFilters = new List<ChartsFilter>
+            {
+                new ChartsFilter
+                {
+                    FilterTitle = "Likes",
+                    FilterMethod = async () => await _apiService.GetLikesScoreboardAsync(RankLikesPlatform.Twitter, Size.Big),
+                },
+                new ChartsFilter
+                {
+                    FilterTitle = "Retweets",
+                    FilterMethod = async () => await _apiService.GetRetweetsScoreboardAsync(Size.Big),
+                },
+                new ChartsFilter
+                {
+                    FilterTitle = "Neue Follower",
+                    FilterMethod = async () => await _apiService.GetSubGainScoreboardAsync(RankAllPlatform.Twitter, Size.Big),
+                },
+                new ChartsFilter
+                {
+                    FilterTitle = "Follower",
+                    FilterMethod = async () => await _apiService.GetSubscribersAsync(RankAllPlatform.Twitter, Size.Big),
+                },
+                new ChartsFilter
+                {
+                    FilterTitle = "Twitter-Rang",
+                    FilterMethod = async () => await _apiService.GetScoreboardAsync(RankAllPlatform.Twitter, Size.Big),
+                },
+            };
+            TwitchFilters = new List<ChartsFilter>
+            {
+                new ChartsFilter
+                {
+                    FilterTitle = "Viewer",
+                    FilterMethod = async () => await _apiService.GetViewersScoreboardAsync(Size.Big),
+                },
+                new ChartsFilter
+                {
+                    FilterTitle = "Peak Viewer",
+                    FilterMethod = async () => await _apiService.GetPeakViewersScoreboardAsync(Size.Big),
+                },
+                new ChartsFilter
+                {
+                    FilterTitle = "Neue Follower",
+                    FilterMethod = async () => await _apiService.GetSubGainScoreboardAsync(RankAllPlatform.Twitch, Size.Big),
+                },
+                new ChartsFilter
+                {
+                    FilterTitle = "Watchtime",
+                    FilterMethod = async () => await _apiService.GetWatchtimeScoreboardAsync(Size.Big),
+                },
+                new ChartsFilter
+                {
+                    FilterTitle = "Follower",
+                    FilterMethod = async () => await _apiService.GetSubscribersAsync(RankAllPlatform.Twitch, Size.Big),
+                },
+                new ChartsFilter
+                {
+                    FilterTitle = "Twitch-Rang",
+                    FilterMethod = async () => await _apiService.GetScoreboardAsync(RankAllPlatform.Twitch, Size.Big),
+                },
+            };
         }
 
         private void ChangePlatform(string platform)
@@ -106,6 +213,21 @@ namespace Nindo.Mobile.ViewModels
                         FilterItems.Clear();
                         FilterItems.AddRange(InstagramFilters);
                         CurrentPlatform = "instagram";
+                        break;
+                    case "tiktok":
+                        FilterItems.Clear();
+                        FilterItems.AddRange(TiktokFilters);
+                        CurrentPlatform = "tiktok";
+                        break;
+                    case "twitter":
+                        FilterItems.Clear();
+                        FilterItems.AddRange(TwitterFilters);
+                        CurrentPlatform = "twitter";
+                        break;
+                    case "twitch":
+                        FilterItems.Clear();
+                        FilterItems.AddRange(TwitchFilters);
+                        CurrentPlatform = "twitch";
                         break;
                     default:
                         throw new InvalidOperationException("Invalid platform!");
@@ -168,6 +290,39 @@ namespace Nindo.Mobile.ViewModels
             set
             {
                 _instagramFilters = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private IList<ChartsFilter> _tiktokFilters;
+        public IList<ChartsFilter> TiktokFilters
+        {
+            get => _tiktokFilters;
+            set
+            {
+                _tiktokFilters = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private IList<ChartsFilter> _twitterFilters;
+        public IList<ChartsFilter> TwitterFilters
+        {
+            get => _twitterFilters;
+            set
+            {
+                _twitterFilters = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private IList<ChartsFilter> _twitchFilters;
+        public IList<ChartsFilter> TwitchFilters
+        {
+            get => _twitchFilters;
+            set
+            {
+                _twitchFilters = value;
                 OnPropertyChanged();
             }
         }
