@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Nindo.Common.Common;
@@ -35,33 +32,34 @@ namespace Nindo.Mobile.ViewModels
             ChangePlatformCommand = new Command<string>(ChangePlatform, CanExecute);
             ChangeFilterCommand = new AsyncCommand<ChartsFilter>(ChangeFilterAsync, CanExecute);
 
-            Items = new RangeObservableCollection<ChartsFilter>();
+            ResultItems = new RangeObservableCollection<Rank>();
+            FilterItems = new RangeObservableCollection<ChartsFilter>();
             YoutubeFilters = new List<ChartsFilter>
             {
                 new ChartsFilter
                 {
                     FilterTitle = "Views",
-                    FilterMethod = _apiService.GetViewsScoreboardAsync(RankViewsPlatform.Youtube, Size.Big),
+                    FilterMethod = async () => await _apiService.GetViewsScoreboardAsync(RankViewsPlatform.Youtube, Size.Big),
                 },
                 new ChartsFilter
                 {
                     FilterTitle = "Likes",
-                    FilterMethod = _apiService.GetLikesScoreboardAsync(RankLikesPlatform.Youtube, Size.Big),
+                    FilterMethod = async () => await _apiService.GetLikesScoreboardAsync(RankLikesPlatform.Youtube, Size.Big),
                 },
                 new ChartsFilter
                 {
                     FilterTitle = "Neue Abos",
-                    FilterMethod = _apiService.GetSubGainScoreboardAsync(RankAllPlatform.Youtube, Size.Big),
+                    FilterMethod = async () => await _apiService.GetSubGainScoreboardAsync(RankAllPlatform.Youtube, Size.Big),
                 },
                 new ChartsFilter
                 {
                     FilterTitle = "Abos",
-                    FilterMethod = _apiService.GetSubscribersAsync(RankAllPlatform.Youtube, Size.Big),
+                    FilterMethod = async () => await _apiService.GetSubscribersAsync(RankAllPlatform.Youtube, Size.Big),
                 },
                 new ChartsFilter
                 {
                     FilterTitle = "YouTube-Rang",
-                    FilterMethod = _apiService.GetScoreboardAsync(RankAllPlatform.Youtube, Size.Big),
+                    FilterMethod = async () => await _apiService.GetScoreboardAsync(RankAllPlatform.Youtube, Size.Big),
                 }
             };
             InstagramFilters = new List<ChartsFilter>
@@ -69,22 +67,22 @@ namespace Nindo.Mobile.ViewModels
                 new ChartsFilter
                 {
                     FilterTitle = "Likes",
-                    FilterMethod = _apiService.GetLikesScoreboardAsync(RankLikesPlatform.Instagram, Size.Big),
+                    FilterMethod = async () => await _apiService.GetLikesScoreboardAsync(RankLikesPlatform.Instagram, Size.Big),
                 },
                 new ChartsFilter
                 {
                     FilterTitle = "Neue Follower",
-                    FilterMethod = _apiService.GetSubGainScoreboardAsync(RankAllPlatform.Instagram, Size.Big),
+                    FilterMethod = async () => await _apiService.GetSubGainScoreboardAsync(RankAllPlatform.Instagram, Size.Big),
                 },
                 new ChartsFilter
                 {
                     FilterTitle = "Follower",
-                    FilterMethod = _apiService.GetSubscribersAsync(RankAllPlatform.Instagram, Size.Big),
+                    FilterMethod = async () => await _apiService.GetSubscribersAsync(RankAllPlatform.Instagram, Size.Big),
                 },
                 new ChartsFilter
                 {
                     FilterTitle = "Instagram-Rang",
-                    FilterMethod = _apiService.GetScoreboardAsync(RankAllPlatform.Instagram, Size.Big),
+                    FilterMethod = async () => await _apiService.GetScoreboardAsync(RankAllPlatform.Instagram, Size.Big),
                 },
             };
         }
@@ -100,13 +98,13 @@ namespace Nindo.Mobile.ViewModels
                 switch (platform)
                 {
                     case "youtube":
-                        Items.Clear();
-                        Items.AddRange(YoutubeFilters);
+                        FilterItems.Clear();
+                        FilterItems.AddRange(YoutubeFilters);
                         CurrentPlatform = "youtube";
                         break;
                     case "instagram":
-                        Items.Clear();
-                        Items.AddRange(InstagramFilters);
+                        FilterItems.Clear();
+                        FilterItems.AddRange(InstagramFilters);
                         CurrentPlatform = "instagram";
                         break;
                     default:
@@ -121,7 +119,17 @@ namespace Nindo.Mobile.ViewModels
 
         private async Task ChangeFilterAsync(ChartsFilter selectedFilter)
         {
-            var test = selectedFilter;
+            try
+            {
+                IsBusy = true;
+
+                ResultItems.Clear();
+                ResultItems.AddRange(await selectedFilter.FilterMethod.Invoke());
+            }
+            finally
+            {
+                IsBusy = false;
+            }
         }
 
         private bool CanExecute(object arg)
@@ -164,16 +172,27 @@ namespace Nindo.Mobile.ViewModels
             }
         }
 
-        private RangeObservableCollection<ChartsFilter> _items;
-        public RangeObservableCollection<ChartsFilter> Items
+        private RangeObservableCollection<ChartsFilter> _filterItems;
+        public RangeObservableCollection<ChartsFilter> FilterItems
         {
-            get => _items;
+            get => _filterItems;
             set
             {
-                _items = value;
+                _filterItems = value;
                 OnPropertyChanged();
             }
         }
 
+        private RangeObservableCollection<Rank> _resultItems;
+
+        public RangeObservableCollection<Rank> ResultItems
+        {
+            get => _resultItems;
+            set
+            {
+                _resultItems = value;
+                OnPropertyChanged();
+            }
+        }
     }
 }

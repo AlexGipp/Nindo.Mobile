@@ -1,6 +1,4 @@
-﻿using System.Diagnostics;
-using System.Linq;
-using Nindo.Mobile.Services.Implementations;
+﻿using Nindo.Mobile.Services.Implementations;
 using Nindo.Mobile.ViewModels;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -19,8 +17,6 @@ namespace Nindo.Mobile.Views
         protected override void OnAppearing()
         {
             base.OnAppearing();
-
-            
         }
     }
 }
