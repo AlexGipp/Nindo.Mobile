@@ -124,7 +124,7 @@ namespace Nindo.Mobile.ViewModels
                 IsBusy = true;
 
                 ResultItems.Clear();
-                ResultItems.AddRange(await selectedFilter.FilterMethod.Invoke());
+                ResultItems.AddRange(await selectedFilter.FilterMethod());
             }
             finally
             {
