@@ -35,6 +35,9 @@ namespace Nindo.Mobile.ViewModels
 
             ResultItems = new RangeObservableCollection<Rank>();
             FilterItems = new RangeObservableCollection<ChartsFilter>();
+
+            #region FilterInitialization
+
             YoutubeFilters = new List<ChartsFilter>
             {
                 new ChartsFilter
@@ -194,6 +197,8 @@ namespace Nindo.Mobile.ViewModels
                     FilterMethod = async () => await _apiService.GetScoreboardAsync(RankAllPlatform.Twitch, Size.Big),
                 },
             };
+
+            #endregion
         }
 
         public async Task LoadDefaultData()
@@ -314,60 +319,16 @@ namespace Nindo.Mobile.ViewModels
         }
 
 
-        private IList<ChartsFilter> _youtubeFilters;
-        public IList<ChartsFilter> YoutubeFilters
-        {
-            get => _youtubeFilters;
-            set
-            {
-                _youtubeFilters = value;
-                OnPropertyChanged();
-            }
-        }
+        public readonly IList<ChartsFilter> YoutubeFilters;
 
-        private IList<ChartsFilter> _instagramFilters;
-        public IList<ChartsFilter> InstagramFilters
-        {
-            get => _instagramFilters;
-            set
-            {
-                _instagramFilters = value;
-                OnPropertyChanged();
-            }
-        }
+        public readonly IList<ChartsFilter> InstagramFilters;
 
-        private IList<ChartsFilter> _tiktokFilters;
-        public IList<ChartsFilter> TiktokFilters
-        {
-            get => _tiktokFilters;
-            set
-            {
-                _tiktokFilters = value;
-                OnPropertyChanged();
-            }
-        }
+        public readonly IList<ChartsFilter> TiktokFilters;
 
-        private IList<ChartsFilter> _twitterFilters;
-        public IList<ChartsFilter> TwitterFilters
-        {
-            get => _twitterFilters;
-            set
-            {
-                _twitterFilters = value;
-                OnPropertyChanged();
-            }
-        }
+        public readonly IList<ChartsFilter> TwitterFilters;
 
-        private IList<ChartsFilter> _twitchFilters;
-        public IList<ChartsFilter> TwitchFilters
-        {
-            get => _twitchFilters;
-            set
-            {
-                _twitchFilters = value;
-                OnPropertyChanged();
-            }
-        }
+        public readonly IList<ChartsFilter> TwitchFilters;
+       
 
         private RangeObservableCollection<ChartsFilter> _filterItems;
         public RangeObservableCollection<ChartsFilter> FilterItems
