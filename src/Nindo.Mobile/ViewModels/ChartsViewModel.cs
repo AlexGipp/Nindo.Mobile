@@ -22,7 +22,6 @@ namespace Nindo.Mobile.ViewModels
         public IAsyncCommand<ChartsFilter> ChangeFilterCommand { get; }
         public IAsyncCommand RefreshCommand { get; }
 
-
         #endregion
 
         public ChartsViewModel(IApiService apiService)
@@ -30,9 +29,9 @@ namespace Nindo.Mobile.ViewModels
             _apiService = apiService;
             Title = "Nindo";
 
-            ChangePlatformCommand = new AsyncCommand<string>(ChangePlatform, CanExecute);
+            ChangePlatformCommand = new AsyncCommand<string>(ChangePlatformAsync, CanExecute);
             ChangeFilterCommand = new AsyncCommand<ChartsFilter>(ChangeFilterAsync, CanExecute);
-            RefreshCommand = new AsyncCommand(RefreshCurrentChartsAsync, CanExecute);
+            RefreshCommand = new AsyncCommand(RefreshAsync, CanExecute);
 
             ResultItems = new RangeObservableCollection<Rank>();
             FilterItems = new RangeObservableCollection<ChartsFilter>();
@@ -201,12 +200,12 @@ namespace Nindo.Mobile.ViewModels
         {
             if (YoutubeFilters != null)
             {
-                await ChangePlatform("youtube");
+                await ChangePlatformAsync("youtube");
                 await ChangeFilterAsync(YoutubeFilters.First());
             }
         }
 
-        private async Task ChangePlatform(string platform)
+        private async Task ChangePlatformAsync(string platform)
         {
             try
             {
@@ -283,9 +282,18 @@ namespace Nindo.Mobile.ViewModels
             }
         }
 
-        private async Task RefreshCurrentChartsAsync()
+        private async Task RefreshAsync()
         {
-            await ChangeFilterAsync(SelectedPickerItem);
+            try
+            {
+                IsBusy = true;
+
+                await ChangeFilterAsync(SelectedPickerItem);
+            }
+            finally
+            {
+                IsBusy = false;
+            }
         }
 
         private bool CanExecute(object arg)

@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
 using FluentAssertions;
-using Nindo.Mobile.Services;
-using Nindo.Mobile.Services.Implementations;
 using Nindo.Mobile.ViewModels;
 using NUnit.Framework;
 
