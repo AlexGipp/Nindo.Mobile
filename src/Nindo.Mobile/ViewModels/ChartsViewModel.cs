@@ -20,6 +20,8 @@ namespace Nindo.Mobile.ViewModels
 
         public IAsyncCommand<string> ChangePlatformCommand { get; }
         public IAsyncCommand<ChartsFilter> ChangeFilterCommand { get; }
+        public IAsyncCommand RefreshCommand { get; }
+
 
         #endregion
 
@@ -30,6 +32,7 @@ namespace Nindo.Mobile.ViewModels
 
             ChangePlatformCommand = new AsyncCommand<string>(ChangePlatform, CanExecute);
             ChangeFilterCommand = new AsyncCommand<ChartsFilter>(ChangeFilterAsync, CanExecute);
+            RefreshCommand = new AsyncCommand(RefreshCurrentChartsAsync, CanExecute);
 
             ResultItems = new RangeObservableCollection<Rank>();
             FilterItems = new RangeObservableCollection<ChartsFilter>();
@@ -278,6 +281,11 @@ namespace Nindo.Mobile.ViewModels
             {
                 IsBusy = false;
             }
+        }
+
+        private async Task RefreshCurrentChartsAsync()
+        {
+            await ChangeFilterAsync(SelectedPickerItem);
         }
 
         private bool CanExecute(object arg)
