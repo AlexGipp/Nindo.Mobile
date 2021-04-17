@@ -18,7 +18,7 @@
     </ContentPage.Resources>
 
     <ContentPage.Content>
-        <Grid >
+        <Grid>
             <RefreshView Command="{Binding RefreshCommand}" IsRefreshing="{Binding IsBusy}">
                 <StackLayout BackgroundColor="{AppThemeBinding Light={StaticResource LightBackgroundColor}, Dark={StaticResource DarkBackgroundColor}}">
                         <Picker x:Name="Picker"
