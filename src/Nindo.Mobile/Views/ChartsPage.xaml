@@ -20,12 +20,10 @@
     <ContentPage.Content>
         <Grid>
             <RefreshView Command="{Binding RefreshCommand}" IsRefreshing="{Binding IsBusy}">
-                <StackLayout>
-                    <StackLayout BackgroundColor="{StaticResource Primary}">
+                <StackLayout BackgroundColor="{AppThemeBinding Light={StaticResource LightBackgroundColor}, Dark={StaticResource DarkBackgroundColor}}">
                         <Picker x:Name="Picker"
                             Margin="20"
                             Title="Select a Filter"
-                            BackgroundColor="{StaticResource Primary}"
                             ItemsSource="{Binding FilterItems}"
                             ItemDisplayBinding="{Binding FilterTitle}"
                             SelectedItem="{Binding SelectedPickerItem}">
@@ -36,7 +34,6 @@
                                 CommandParameter="{Binding Source={x:Reference Picker}, Path=SelectedItem}"/>
                             </Picker.Behaviors>
                         </Picker>
-                    </StackLayout>
                     <CollectionView ItemsSource="{Binding ResultItems}">
                         <CollectionView.Header>
                             <Label Grid.Row="3" 
@@ -48,7 +45,11 @@
                         </CollectionView.Header>
                         <CollectionView.ItemTemplate>
                             <DataTemplate>
-                                <Frame BorderColor="#eeeeee" Padding="0" x:DataType="nindo:Rank">
+                                <Frame BorderColor="{AppThemeBinding Light={StaticResource LightFrameColor}, Dark={StaticResource DarkFrameColor}}" 
+                                       BackgroundColor="{AppThemeBinding Light={StaticResource LightBackgroundColor}, Dark={StaticResource DarkBackgroundColor}}"
+                                       Padding="0"
+                                       CornerRadius="0"
+                                       x:DataType="nindo:Rank">
                                     <Grid Padding="0" RowSpacing="0" RowDefinitions="Auto, *" ColumnDefinitions="80,80,Auto,*">
                                         <ffimageloading:CachedImage Grid.Row="0"
                                                                 Grid.Column="0"
@@ -67,7 +68,7 @@
                                         <StackLayout Grid.Row="0" Grid.Column="2" VerticalOptions="Center">
                                             <Label Text="{Binding ArtistName}"
                                                    FontAttributes="Bold"
-                                                   TextColor="#5a5a5a"
+                                                   TextColor="{AppThemeBinding Light={StaticResource LightPrimaryTextColor}, Dark={StaticResource DarkPrimaryTextColor}}"
                                                    VerticalTextAlignment="Center" />
                                             <Label Text="{Binding Name}"
                                                    TextColor="#ababab"

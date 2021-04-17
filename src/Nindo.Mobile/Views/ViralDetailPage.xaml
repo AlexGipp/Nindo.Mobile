@@ -9,7 +9,7 @@
              Title="{Binding Title}">
 
     <ContentPage.Content>
-        <StackLayout Padding="20">
+        <StackLayout Padding="20" BackgroundColor="{AppThemeBinding Light={StaticResource LightBackgroundColor}, Dark={StaticResource DarkBackgroundColor}}">
             <Grid  RowSpacing="0"
                    ColumnSpacing="0"
                    Padding="0,20,0,20">
