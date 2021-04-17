@@ -24,7 +24,7 @@
 
     <ContentPage.Content>
         <ScrollView>
-            <StackLayout>
+            <StackLayout BackgroundColor="{AppThemeBinding Light={StaticResource LightBackgroundColor}, Dark={StaticResource DarkBackgroundColor}}">
                 <Label>YouTube</Label>
                 <Button Text="Views" Command="{Binding OpenDetailPageCommand}"
                         CommandParameter="{StaticResource YoutubeViews}" />
