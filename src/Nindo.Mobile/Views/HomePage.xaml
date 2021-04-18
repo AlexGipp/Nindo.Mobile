@@ -28,18 +28,7 @@
                 <StackLayout>
                     <CollectionView ItemsSource="{Binding Items}">
                         <CollectionView.Header>
-                            <Grid>
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="*" />
-                                    <RowDefinition Height="Auto" />
-                                    <RowDefinition Height="*" />
-                                    <RowDefinition Height="Auto" />
-                                </Grid.RowDefinitions>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="*" />
-                                    <ColumnDefinition Width="*" />
-                                    <ColumnDefinition Width="*" />
-                                </Grid.ColumnDefinitions>
+                            <Grid RowDefinitions="*, Auto, *, Auto" ColumnDefinitions="*, *, *">
                                 <StackLayout Grid.Column="0" Grid.Row="1" VerticalOptions="Center">
                                     <BoxView HeightRequest="3" />
                                 </StackLayout>
@@ -62,24 +51,14 @@
                                     BackgroundColor="{AppThemeBinding Light={StaticResource LightBackgroundColor}, Dark={StaticResource DarkBackgroundColor}}"
                                     Padding="0"
                                     CornerRadius="0">
-                                    <Grid Padding="0" RowSpacing="0">
-                                        <Grid.RowDefinitions>
-                                            <RowDefinition Height="Auto" />
-                                            <RowDefinition Height="*" />
-                                        </Grid.RowDefinitions>
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="Auto" />
-                                            <ColumnDefinition Width="80" />
-                                            <ColumnDefinition Width="Auto" />
-                                            <ColumnDefinition Width="*" />
-                                        </Grid.ColumnDefinitions>
+                                    <Grid Padding="0" RowSpacing="0" RowDefinitions="Auto, *" ColumnDefinitions="Auto, 80, Auto, *">
                                         <ffimageloading:CachedImage Grid.Row="0"
                                                                     Grid.Column="0" 
                                                                     Grid.RowSpan="1" 
                                                                     Aspect="AspectFit" 
                                                                     HeightRequest="80" 
                                                                     BitmapOptimizations="True" 
-                                                                    Source="{Binding Avatar}"/> 
+                                                                    Source="{Binding Avatar}"/>
                                         <Label Grid.Row="0"
                                                Grid.Column="1"
                                                Text="{Binding RankNumber}"
