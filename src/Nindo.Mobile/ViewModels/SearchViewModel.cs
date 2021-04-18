@@ -11,14 +11,13 @@ namespace Nindo.Mobile.ViewModels
 {
     public class SearchViewModel : ViewModelBase
     {
+        private readonly IApiService _apiService;
 
         #region command
 
         public IAsyncCommand SearchCommand { get; }
 
         #endregion
-
-        private readonly IApiService _apiService;
 
         public SearchViewModel(IApiService apiService)
         {
