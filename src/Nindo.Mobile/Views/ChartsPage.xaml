@@ -13,35 +13,41 @@
              Shell.NavBarHasShadow="False"
              Title="{Binding Title}">
 
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Order="Primary" Icon="search.png" Command="{Binding OpenSearchCommand}"/>
+    </ContentPage.ToolbarItems>
+
     <ContentPage.Resources>
         <converters:MetricConverter x:Key="LongToMetricConverter" />
     </ContentPage.Resources>
 
     <ContentPage.Content>
         <Grid>
-            <RefreshView Command="{Binding RefreshCommand}" IsRefreshing="{Binding IsBusy}">
+            <RefreshView 
+                Command="{Binding RefreshCommand}" 
+                IsRefreshing="{Binding IsBusy}">
                 <StackLayout BackgroundColor="{AppThemeBinding Light={StaticResource LightBackgroundColor}, Dark={StaticResource DarkBackgroundColor}}">
-                        <Picker x:Name="Picker"
+                    <Picker x:Name="Picker"
                             Margin="20"
                             Title="Select a Filter"
                             ItemsSource="{Binding FilterItems}"
                             ItemDisplayBinding="{Binding FilterTitle}"
                             SelectedItem="{Binding SelectedPickerItem}">
-                            <Picker.Behaviors>
-                                <xct:EventToCommandBehavior
+                        <Picker.Behaviors>
+                            <xct:EventToCommandBehavior
                                 EventName="SelectedIndexChanged"
                                 Command="{Binding ChangeFilterCommand}"
                                 CommandParameter="{Binding Source={x:Reference Picker}, Path=SelectedItem}"/>
-                            </Picker.Behaviors>
-                        </Picker>
+                        </Picker.Behaviors>
+                    </Picker>
                     <CollectionView ItemsSource="{Binding ResultItems}">
                         <CollectionView.Header>
                             <Label Grid.Row="3" 
-                               Text="{Binding CollectionViewHeaderText}"
-                               Grid.ColumnSpan="3"
-                               TextColor="#ababab"
-                               HorizontalTextAlignment="End" 
-                               Padding="0,0,10,10" />
+                                   Text="{Binding CollectionViewHeaderText}"
+                                   Grid.ColumnSpan="3"
+                                   TextColor="#ababab"
+                                   HorizontalTextAlignment="End" 
+                                   Padding="0,0,10,10" />
                         </CollectionView.Header>
                         <CollectionView.ItemTemplate>
                             <DataTemplate>
@@ -51,12 +57,13 @@
                                        CornerRadius="0"
                                        x:DataType="nindo:Rank">
                                     <Grid Padding="0" RowSpacing="0" RowDefinitions="Auto, *" ColumnDefinitions="80,80,Auto,*">
-                                        <ffimageloading:CachedImage Grid.Row="0"
-                                                                Grid.Column="0"
-                                                                Aspect="AspectFit" 
-                                                                HeightRequest="80" 
-                                                                BitmapOptimizations="True" 
-                                                                Source="{Binding Avatar}"/>
+                                        <ffimageloading:CachedImage 
+                                            Grid.Row="0"
+                                            Grid.Column="0"
+                                            Aspect="AspectFit" 
+                                            HeightRequest="80" 
+                                            BitmapOptimizations="True" 
+                                            Source="{Binding Avatar}"/>
                                         <Label Grid.Row="0"
                                                Grid.Column="1"
                                                Text="{Binding RankNumber}"

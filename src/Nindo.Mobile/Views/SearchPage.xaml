@@ -1,0 +1,66 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:viewModels="clr-namespace:Nindo.Mobile.ViewModels;assembly=Nindo.Mobile"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:xct="http://xamarin.com/schemas/2020/toolkit"
+             xmlns:ffimageloading="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+             xmlns:nindo="clr-namespace:Nindo.Net.Models;assembly=Nindo.Net"
+             x:Class="Nindo.Mobile.Views.SearchPage"
+             Title="{Binding Title}"
+             x:DataType="viewModels:SearchViewModel">
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Style x:Key="SearchBarStyle" TargetType="SearchBar">
+                <Setter Property="BackgroundColor" Value="Transparent" />
+            </Style>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <ContentPage.Content>
+        <StackLayout BackgroundColor="{AppThemeBinding Light={StaticResource LightBackgroundColor}, Dark={StaticResource DarkBackgroundColor}}">
+            <Frame BackgroundColor="Transparent">
+                <SearchBar
+                    x:Name="SearchBar"
+                    Style="{StaticResource SearchBarStyle}"
+                    Placeholder="Suchen..." 
+                    TextColor="{AppThemeBinding Light={StaticResource LightPrimaryTextColor}, Dark={StaticResource DarkPrimaryTextColor}}"
+                    Text="{Binding SearchText}"
+                    SearchCommand="{Binding SearchCommand}">
+                    <SearchBar.Behaviors>
+                        <xct:EventToCommandBehavior
+                            EventName="TextChanged"
+                            Command="{Binding SearchCommand}"/>
+                    </SearchBar.Behaviors>
+                </SearchBar>
+            </Frame>
+            <CollectionView 
+                ItemsSource="{Binding SearchResult}"
+                EmptyView="Keine suche definiert." >
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Frame BorderColor="{AppThemeBinding Light={StaticResource LightFrameColor}, Dark={StaticResource DarkFrameColor}}" 
+                                       BackgroundColor="{AppThemeBinding Light={StaticResource LightBackgroundColor}, Dark={StaticResource DarkBackgroundColor}}"
+                                       Padding="0"
+                                       CornerRadius="0"
+                                       x:DataType="nindo:Search">
+                            <Grid Padding="0" RowSpacing="0" RowDefinitions="Auto, *" ColumnDefinitions="80,*">
+                                <ffimageloading:CachedImage Grid.Row="0"
+                                                                Grid.Column="0"
+                                                                Aspect="AspectFit" 
+                                                                HeightRequest="80" 
+                                                                BitmapOptimizations="True" 
+                                                                Source="{Binding Avatar}"/>
+                                <Label Text="{Binding Name}"
+                                       Grid.Row="0" Grid.Column="1"
+                                       FontAttributes="Bold"
+                                       TextColor="{AppThemeBinding Light={StaticResource LightPrimaryTextColor}, Dark={StaticResource DarkPrimaryTextColor}}"
+                                       VerticalTextAlignment="Center" />
+                            </Grid>
+                        </Frame>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

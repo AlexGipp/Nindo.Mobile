@@ -7,6 +7,10 @@
              x:Class="Nindo.Mobile.Views.ViralPage"
              x:DataType="viewModels:ViralViewModel">
 
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Order="Primary" Icon="search.png" Command="{Binding OpenSearchCommand}"/>
+    </ContentPage.ToolbarItems>
+
     <ContentPage.Resources>
         <m:ViralTypes x:Key="TwitchMaxViewer">TwitchMaxViewer</m:ViralTypes>
         <m:ViralTypes x:Key="TwitchLongestStream">TwitchLongestStream</m:ViralTypes>
