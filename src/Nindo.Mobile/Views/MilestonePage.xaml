@@ -14,6 +14,10 @@
             Shell.NavBarHasShadow="False"
             x:DataType="viewModels:MilestonesViewModel">
 
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Order="Primary" Icon="search.png" Command="{Binding OpenSearchCommand}"/>
+    </ContentPage.ToolbarItems>
+
     <ContentPage.Resources>
         <converters:IconConverter x:Key="IconConverter" />
         <ResourceDictionary>
