@@ -13,6 +13,10 @@
              Shell.NavBarHasShadow="False"
              Title="{Binding Title}">
 
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Order="Primary" Icon="search.png" Command="{Binding OpenSearchCommand}"/>
+    </ContentPage.ToolbarItems>
+
     <ContentPage.Resources>
         <converters:MetricConverter x:Key="LongToMetricConverter" />
     </ContentPage.Resources>

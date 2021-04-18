@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:viewModels="clr-namespace:Nindo.Mobile.ViewModels;assembly=Nindo.Mobile"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Nindo.Mobile.Views.SearchPage"
+             Title="{Binding Title}"
+             x:DataType="viewModels:SearchViewModel">
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Style x:Key="SearchBarStyle" TargetType="SearchBar">
+                <Setter Property="BackgroundColor" Value="Black" />
+            </Style>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <ContentPage.Content>
+        <StackLayout BackgroundColor="{AppThemeBinding Light={StaticResource LightBackgroundColor}, Dark={StaticResource DarkBackgroundColor}}">
+            <Frame BackgroundColor="Transparent">
+                <SearchBar 
+                    Style="{StaticResource SearchBarStyle}"
+                    Placeholder="Suchen..." 
+                    TextColor="{AppThemeBinding Light={StaticResource LightPrimaryTextColor}, Dark={StaticResource DarkPrimaryTextColor}}"
+                    SearchCommand="{Binding SearchCommand}"
+                    Text="{Binding SearchText}"/>
+            </Frame>    
+           
+
+            
+           
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

@@ -14,6 +14,7 @@
 	  <None Remove="Resources\instagram.svg" />
 	  <None Remove="Resources\instagram_white.svg" />
 	  <None Remove="Resources\milestones.svg" />
+	  <None Remove="Resources\search.svg" />
 	  <None Remove="Resources\tiktok.svg" />
 	  <None Remove="Resources\tiktok_white.svg" />
 	  <None Remove="Resources\twitch.svg" />
@@ -27,11 +28,11 @@
 
 	<ItemGroup>
 		<PackageReference Include="Humanizer.Core" Version="2.8.26" />
-		<PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+		<PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
 		<PackageReference Include="Nindo.Net" Version="1.0.7" />
 		<PackageReference Include="Refractored.MvvmHelpers" Version="1.6.2" />
 		<PackageReference Include="Resizetizer.NT" Version="0.2.0" />
-		<PackageReference Include="Xamarin.CommunityToolkit" Version="1.1.0" />
+		<PackageReference Include="Xamarin.CommunityToolkit" Version="1.0.3" />
 		<PackageReference Include="Xamarin.FFImageLoading" Version="2.4.11.982" />
 		<PackageReference Include="Xamarin.FFImageLoading.Forms" Version="2.4.11.982" />
 		<PackageReference Include="Xamarin.Forms" Version="5.0.0.2012" />
@@ -48,6 +49,7 @@
 	  <SharedImage Include="Resources\instagram.svg" BaseSize="60,60" />
 	  <SharedImage Include="Resources\instagram_white.svg" />
 	  <SharedImage Include="Resources\milestones.svg" BaseSize="60,60" />
+	  <SharedImage Include="Resources\search.svg" />
 	  <SharedImage Include="Resources\tiktok.svg" BaseSize="60,60" />
 	  <SharedImage Include="Resources\tiktok_white.svg" />
 	  <SharedImage Include="Resources\twitch.svg" BaseSize="60,60" />
@@ -57,6 +59,7 @@
 	  <SharedImage Include="Resources\viral.svg" BaseSize="60,60" />
 	  <SharedImage Include="Resources\youtube.svg" BaseSize="60,60" />
 	  <SharedImage Include="Resources\youtube_white.svg" />
+	  <SharedImage Include="Resources\search.svg" BaseSize="60,60" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -73,6 +76,9 @@
 			<Generator>MSBuild:UpdateDesignTimeXaml</Generator>
 		</EmbeddedResource>
 		<EmbeddedResource Update="Views\MilestonePage.xaml">
+		  <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+		</EmbeddedResource>
+		<EmbeddedResource Update="Views\SearchPage.xaml">
 		  <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
 		</EmbeddedResource>
 		<EmbeddedResource Update="Views\TwitchViralDetailPage.xaml">
@@ -94,4 +100,4 @@
 	  <Folder Include="Controls\" />
 	  <Folder Include="TemplateSelectors\" />
 	</ItemGroup>
-</Project>
+</Project> 

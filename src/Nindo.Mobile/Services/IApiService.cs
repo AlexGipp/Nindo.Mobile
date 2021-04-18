@@ -29,5 +29,7 @@ namespace Nindo.Mobile.Services
         public Task<Milestone[]> GetMilestonesAsync();
 
         public Task<Milestone[]> GetPastMilestonesAsync();
+
+        public Task<Search[]> SearchUserAsync(string term);
     }
 }

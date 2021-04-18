@@ -72,5 +72,10 @@ namespace Nindo.Mobile.Services.Implementations
         {
             return _nindoClient.GetPastMilestonesAsync();
         }
+
+        public Task<Search[]> SearchUserAsync(string term)
+        {
+            return _nindoClient.SearchUserAsync(term);
+        }
     }
 }
