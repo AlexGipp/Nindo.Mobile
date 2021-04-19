@@ -1,74 +1,75 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using Humanizer;
+using Nindo.Mobile.Models;
 using Nindo.Net.Models;
 
 namespace Nindo.Mobile.ViewModels
 {
     public class ViralDetailPageViewModel : ViewModelBase
     {
-        public ViralDetailPageViewModel(Viral viral)
+        public ViralDetailPageViewModel(IList<Viral> viral)
         {
-            ViralEntry = viral;
-            Title = $"{ViralEntry.Platform.Humanize()} {ViralEntry.Type.Humanize()}";
+            Title = $"Viral Hits";
+
+            GetFirstDayOfCurrentMonth();
+            ViralEntries = viral.ToList();
         }
 
         public void SetupViewModel()
         {
-            GetContentUrl();
+            try
+            {
+                IsBusy = true;
 
-            if (ViralEntry.Platform.Equals("twitch"))
-            {
-                GetTwitchInfoMessage();
+                switch (ViralEntries.First().Platform)
+                {
+                    case "youtube":
+                        Entries = new List<ExtendedViral>
+                        {
+                            new ExtendedViral
+                            {
+                                ViralTitle = "Views",
+                                ViralEntry = ViralEntries.FirstOrDefault(x => "views".Equals(x.Type))
+                            },
+                            new ExtendedViral
+                            {
+                                ViralTitle = "Likes",
+                                ViralEntry = ViralEntries.FirstOrDefault(x => "likes".Equals(x.Type))
+                            },
+                            new ExtendedViral
+                            {
+                                ViralTitle = "Kommentare",
+                                ViralEntry = ViralEntries.FirstOrDefault(x => "kommentare".Equals(x.Type))
+                            }
+                        };
+                        break;
+                    case "tiktok":
+                        Entries = new List<ExtendedViral>
+                        {
+                            new ExtendedViral
+                            {
+                                ViralTitle = "Views",
+                                ViralEntry = ViralEntries.FirstOrDefault(x => "views".Equals(x.Type))
+                            },
+                            new ExtendedViral
+                            {
+                                ViralTitle = "Likes",
+                                ViralEntry = ViralEntries.FirstOrDefault(x => "likes".Equals(x.Type))
+                            },
+                            new ExtendedViral
+                            {
+                                ViralTitle = "Kommentare",
+                                ViralEntry = ViralEntries.FirstOrDefault(x => "kommentare".Equals(x.Type))
+                            }
+                        };
+                        break;
+                }
             }
-            else
+            finally
             {
-                GetFirstDayOfCurrentMonth();
-            }
-        }
-
-        private void GetTwitchInfoMessage()
-        {
-            if ("max. zuschauer".Equals(ViralEntry.Type))
-            {
-                TwitchValue = $"{ViralEntry.Value:N0}";
-                InfoMessage = "Live Zuschauer";
-            }
-            else
-            {
-                var span = TimeSpan.FromMinutes(ViralEntry.Value);
-                TwitchValue = $"{Math.Round(span.TotalHours)} Stunden {span.Minutes} Minuten";
-            }
-        }
-
-        private void GetContentUrl()
-        {
-            switch (ViralEntry.Platform)
-            {
-                case "twitter":
-                    ContentUrl = $"https://platform.twitter.com/embed/Tweet.html?dnt=false&embedId=twitter-widget-1&frame=false&hideCard=false&hideThread=false&id={ViralEntry.PostId}&lang=de&origin=https%3A%2F%2Fnindo.de%2Fviral&theme=light&widgetsVersion=889aa01%3A1612811843556&width=100px";
-                    Height = 500;
-                    Width = 500;
-                    break;
-                case "tiktok":
-                    ContentUrl = $"https://www.tiktok.com/embed/v2/{ViralEntry.PostId}?lang=de";
-                    Height = 800;
-                    Width = 500;
-                    break;
-                case "youtube":
-                    ContentUrl = $"https://www.youtube.com/embed/{ViralEntry.PostId}";
-                    Height = 250;
-                    Width = 500;
-                    break;
-                case "instagram":
-                    ContentUrl = $"https://www.instagram.com/p/{ViralEntry.PostId}/embed/?cr=1&v=12&wp=64&rd=https%3A%2F%2Fnindo.de&rp=%2Fviral#%7B%22ci%22%3A0%2C%22os%22%3A1799.8050000001058%2C%22ls%22%3A545.0650000002497%2C%22le%22%3A545.91500000015%7D";
-                    Height = 750;
-                    Width = 500;
-                    break;
-                case "twitch":
-                    ContentUrl = $"https://player.twitch.tv/?channel={ViralEntry.Post.Channel.ArtistBase.Name}&muted=true&parent=streamernews.example.com";
-                    Height = 250;
-                    Width = 500;
-                    break;
+                IsBusy = false;
             }
         }
 
@@ -76,6 +77,30 @@ namespace Nindo.Mobile.ViewModels
         {
             var dateTimeNow = DateTime.Now;
             FirstDayOfMonth = new DateTime(dateTimeNow.Year, dateTimeNow.Month, 1).ToString("dd.MM");
+        }
+
+        private List<Viral> _viralEntries;
+
+        public List<Viral> ViralEntries
+        {
+            get => _viralEntries;
+            set
+            {
+                _viralEntries = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private IList<ExtendedViral> _entries;
+
+        public IList<ExtendedViral> Entries
+        {
+            get => _entries;
+            set
+            {
+                _entries = value;
+                OnPropertyChanged();
+            }
         }
 
         private string _firstDayOfMonth;
@@ -103,18 +128,6 @@ namespace Nindo.Mobile.ViewModels
         }
 
 
-        private Viral _viralEntry;
-
-        public Viral ViralEntry
-        {
-            get => _viralEntry;
-            set
-            {
-                _viralEntry = value;
-                OnPropertyChanged();
-            }
-        }
-
         private int _height;
 
         public int Height
@@ -135,30 +148,6 @@ namespace Nindo.Mobile.ViewModels
             set
             {
                 _width = value;
-                OnPropertyChanged();
-            }
-        }
-
-        private string _infoMessage;
-
-        public string InfoMessage
-        {
-            get => _infoMessage;
-            set
-            {
-                _infoMessage = value;
-                OnPropertyChanged();
-            }
-        }
-
-        private string _twitchValue;
-
-        public string TwitchValue
-        {
-            get => _twitchValue;
-            set
-            {
-                _twitchValue = value;
                 OnPropertyChanged();
             }
         }
