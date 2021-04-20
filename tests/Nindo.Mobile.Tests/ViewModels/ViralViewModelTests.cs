@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using FluentAssertions;
 using Moq;
 using Nindo.Mobile.Models;
@@ -11,18 +12,13 @@ namespace Nindo.Mobile.Tests.ViewModels
 {
     [TestFixture]
     public class ViralViewModelTests
-    {/*
-        [TestCase(ViralTypes.TwitterLikes)]
-        [TestCase(ViralTypes.TwitterRetweets)]
-        [TestCase(ViralTypes.TiktokLikes)]
-        [TestCase(ViralTypes.TiktokComments)]
-        [TestCase(ViralTypes.TiktokViews)]
-        [TestCase(ViralTypes.YoutubeLikes)]
-        [TestCase(ViralTypes.YoutubeComments)]
-        [TestCase(ViralTypes.YoutubeViews)]
-        [TestCase(ViralTypes.InstagramLikes)]
-        [TestCase(ViralTypes.InstagramComments)]
-        public async Task OpenDetailPage_EnumProvided_NavigateToDetailPage(ViralTypes type)
+    {
+        [TestCase(Platforms.Youtube)]
+        [TestCase(Platforms.Instagram)]
+        [TestCase(Platforms.Tiktok)]
+        [TestCase(Platforms.Twitter)]
+        [TestCase(Platforms.Twitch)]
+        public async Task OpenDetailPage_EnumProvided_NavigateToDetailPage(Platforms type)
         {
             // Arrange
             var apiService = Mock.Of<IApiService>();
@@ -50,8 +46,8 @@ namespace Nindo.Mobile.Tests.ViewModels
             await sut.OpenDetailPageCommand.ExecuteAsync(type);
 
             // Assert
-            Mock.Get(navigationService).Verify(m => m.OpenViralDetailPage(It.IsAny<Viral>()), Times.Once);
-        }*/
+            Mock.Get(navigationService).Verify(m => m.OpenViralDetailPage(It.IsAny<IList<Viral>>()), Times.Once);
+        }
 
         [Test]
         public async Task OpenDetailPage_IsBusyFalseHasData_CanExecute()

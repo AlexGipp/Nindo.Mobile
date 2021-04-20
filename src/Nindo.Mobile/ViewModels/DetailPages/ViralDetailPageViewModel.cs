@@ -140,6 +140,33 @@ namespace Nindo.Mobile.ViewModels.DetailPages
                             };
                         }
                         break;
+                    case "twitch":
+                        {
+                            var maxZuschauer = ViralEntries.FirstOrDefault(x => "max. zuschauer".Equals(x.Type));
+                            var longestStream = ViralEntries.FirstOrDefault(x => "längster stream".Equals(x.Type));
+
+                            Height = 250;
+                            Width = 500;
+
+                            Entries = new List<ExtendedViral>
+                            {
+                                new ExtendedViral
+                                {
+                                    ViralTitle = "Max. Zuschauer",
+                                    ViralEntry = maxZuschauer,
+                                    ViralEmbed = $"https://player.twitch.tv/?channel={maxZuschauer.Post.Channel.ArtistBase.Name}&muted=true&parent=streamernews.example.com",
+                                    FormattedValue = $"{maxZuschauer.Value:N0} Live Zuschauer"
+                                },
+                                new ExtendedViral
+                                {
+                                    ViralTitle = "Längster Stream",
+                                    ViralEntry = longestStream,
+                                    ViralEmbed = $"https://player.twitch.tv/?channel={longestStream.Post.Channel.ArtistBase.Name}&muted=true&parent=streamernews.example.com",
+                                    FormattedValue = $"{Math.Round(TimeSpan.FromMinutes(longestStream.Value).TotalHours)} Stunden {TimeSpan.FromMinutes(longestStream.Value).Minutes} Minuten"
+                                }
+                            };
+                        }
+                        break;
                 }
             }
             finally
@@ -153,6 +180,8 @@ namespace Nindo.Mobile.ViewModels.DetailPages
             var dateTimeNow = DateTime.Now;
             FirstDayOfMonth = new DateTime(dateTimeNow.Year, dateTimeNow.Month, 1).ToString("dd.MM");
         }
+
+        #region Properties
 
         private List<Viral> _viralEntries;
 
@@ -223,5 +252,7 @@ namespace Nindo.Mobile.ViewModels.DetailPages
                 OnPropertyChanged();
             }
         }
+
+        #endregion
     }
 }

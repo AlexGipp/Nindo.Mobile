@@ -4,10 +4,8 @@ using System.Threading.Tasks;
 using Nindo.Common.Common;
 using Nindo.Mobile.Models;
 using Nindo.Mobile.Services;
-using Nindo.Mobile.Services.Implementations;
 using Nindo.Net.Models;
 using Xamarin.CommunityToolkit.ObjectModel;
-using Xamarin.Forms;
 
 namespace Nindo.Mobile.ViewModels
 {
@@ -15,12 +13,18 @@ namespace Nindo.Mobile.ViewModels
     {
         private readonly IApiService _apiService;
         private readonly INavigationService _navigationService;
+
+        #region commands
+
         public IAsyncCommand<Platforms> OpenDetailPageCommand { get; }
+
+        #endregion
 
         public ViralViewModel(IApiService apiService, INavigationService navigationService)
         {
             _apiService = apiService;
             _navigationService = navigationService;
+
             OpenDetailPageCommand = new AsyncCommand<Platforms>(OpenDetailPageAsync, CanExecute);
         }
 

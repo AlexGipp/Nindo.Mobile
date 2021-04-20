@@ -1,6 +1,5 @@
 ﻿using Nindo.Mobile.ViewModels;
 using Nindo.Net.Models;
-using Xamarin.Forms;
 
 namespace Nindo.Mobile.Models
 {
@@ -9,6 +8,8 @@ namespace Nindo.Mobile.Models
         public string ViralTitle { get; set; }
 
         public string ViralEmbed { get; set; }
+
+        public string FormattedValue { get; set; }
 
         private Viral _viralEntry;
         public Viral ViralEntry

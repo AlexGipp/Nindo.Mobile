@@ -81,9 +81,6 @@
 		<EmbeddedResource Update="Views\SearchPage.xaml">
 		  <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
 		</EmbeddedResource>
-		<EmbeddedResource Update="Views\DetailPages\TwitchViralDetailPage.xaml">
-		  <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
-		</EmbeddedResource>
 		<EmbeddedResource Update="Views\DetailPages\ViralDetailPage.xaml">
 		  <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
 		</EmbeddedResource>
@@ -98,6 +95,5 @@
 
 	<ItemGroup>
 	  <Folder Include="Controls\" />
-	  <Folder Include="TemplateSelectors\" />
 	</ItemGroup>
 </Project> 
