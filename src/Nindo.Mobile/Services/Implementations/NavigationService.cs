@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using Nindo.Mobile.Views;
+using Nindo.Mobile.Views.DetailPages;
 using Nindo.Net.Models;
 using Xamarin.Forms;
 

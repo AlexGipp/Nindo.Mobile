@@ -81,10 +81,10 @@
 		<EmbeddedResource Update="Views\SearchPage.xaml">
 		  <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
 		</EmbeddedResource>
-		<EmbeddedResource Update="Views\TwitchViralDetailPage.xaml">
+		<EmbeddedResource Update="Views\DetailPages\TwitchViralDetailPage.xaml">
 		  <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
 		</EmbeddedResource>
-		<EmbeddedResource Update="Views\ViralDetailPage.xaml">
+		<EmbeddedResource Update="Views\DetailPages\ViralDetailPage.xaml">
 		  <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
 		</EmbeddedResource>
 		<EmbeddedResource Update="Views\ViralPage.xaml">

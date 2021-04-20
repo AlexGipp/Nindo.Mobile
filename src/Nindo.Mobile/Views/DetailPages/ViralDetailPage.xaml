@@ -5,7 +5,7 @@
              xmlns:viewModels="clr-namespace:Nindo.Mobile.ViewModels;assembly=Nindo.Mobile"
              xmlns:ffimageloading="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
              xmlns:xct="http://xamarin.com/schemas/2020/toolkit"
-             x:Class="Nindo.Mobile.Views.ViralDetailPage"
+             x:Class="Nindo.Mobile.Views.DetailPages.ViralDetailPage"
              Shell.NavBarHasShadow="False"
              x:Name="DetailPage"
              Title="{Binding Title}">
@@ -48,6 +48,9 @@
 
                         <ffimageloading:CachedImage Grid.RowSpan="2" Grid.Column="1" Source="{Binding ViralEntry.Post.Channel.Avatar}" HorizontalOptions="End" BitmapOptimizations="True"/>
                     </Grid>
+                    <ScrollView>
+                        <WebView Source="{Binding ViralEmbed}" WidthRequest="{Binding Source={x:Reference DetailPage}, Path=BindingContext.Width}" HeightRequest="{Binding Source={x:Reference DetailPage}, Path=BindingContext.Height}" VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand"/>
+                    </ScrollView>
                 </StackLayout>
             </DataTemplate>
         </ResourceDictionary>
