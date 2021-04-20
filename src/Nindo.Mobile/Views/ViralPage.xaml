@@ -4,6 +4,8 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:viewModels="clr-namespace:Nindo.Mobile.ViewModels;assembly=Nindo.Mobile"
              xmlns:m="clr-namespace:Nindo.Mobile.Models;assembly=Nindo.Mobile"
+             xmlns:xct="http://xamarin.com/schemas/2020/toolkit"
+             xmlns:models="clr-namespace:Nindo.Mobile.Models;assembly=Nindo.Mobile"
              x:Class="Nindo.Mobile.Views.ViralPage"
              x:DataType="viewModels:ViralViewModel">
 
@@ -27,38 +29,92 @@
     </ContentPage.Resources>
 
     <ContentPage.Content>
-        <ScrollView>
-            <StackLayout BackgroundColor="{AppThemeBinding Light={StaticResource LightBackgroundColor}, Dark={StaticResource DarkBackgroundColor}}">
-                <Label>YouTube</Label>
-                <Button Text="Views" Command="{Binding OpenDetailPageCommand}"
-                        CommandParameter="{StaticResource YoutubeViews}" />
-                <Button Text="Likes" Command="{Binding OpenDetailPageCommand}"
-                        CommandParameter="{StaticResource YoutubeLikes}" />
-                <Button Text="Kommentare" Command="{Binding OpenDetailPageCommand}"
-                        CommandParameter="{StaticResource YoutubeComments}" />
-                <Label>TikTok</Label>
-                <Button Text="Views" Command="{Binding OpenDetailPageCommand}"
-                        CommandParameter="{StaticResource TiktokViews}" />
-                <Button Text="Likes" Command="{Binding OpenDetailPageCommand}"
-                        CommandParameter="{StaticResource TiktokLikes}" />
-                <Button Text="Kommentare" Command="{Binding OpenDetailPageCommand}"
-                        CommandParameter="{StaticResource TiktokComments}" />
-                <Label>Twitch</Label>
-                <Button Text="Max. Zuschauer" Command="{Binding OpenDetailPageCommand}"
-                        CommandParameter="{StaticResource TwitchMaxViewer}" />
-                <Button Text="Längster Stream" Command="{Binding OpenDetailPageCommand}"
-                        CommandParameter="{StaticResource TwitchLongestStream}" />
-                <Label>Instagram</Label>
-                <Button Text="Likes" Command="{Binding OpenDetailPageCommand}"
-                        CommandParameter="{StaticResource InstagramLikes}" />
-                <Button Text="Kommentare" Command="{Binding OpenDetailPageCommand}"
-                        CommandParameter="{StaticResource InstagramComments}" />
-                <Label>Twitter</Label>
-                <Button Text="Likes" Command="{Binding OpenDetailPageCommand}"
-                        CommandParameter="{StaticResource TwitterLikes}" />
-                <Button Text="Retweets" Command="{Binding OpenDetailPageCommand}"
-                        CommandParameter="{StaticResource TwitterRetweets}" />
-            </StackLayout>
-        </ScrollView>
+        <Grid RowDefinitions="*,*,*" ColumnDefinitions="*,*" Padding="20" ColumnSpacing="12" RowSpacing="12" BackgroundColor="{AppThemeBinding Light={StaticResource LightBackgroundColor}, Dark={StaticResource DarkBackgroundColor}}" >
+            <Button Grid.Row="0"
+                    Grid.Column="0"
+                    CornerRadius="15"
+                    Text="YouTube"
+                    Command="{Binding OpenDetailPageCommand}"
+                    CommandParameter="{x:Static models:Platforms.Youtube}">
+                <Button.Background>
+                    <LinearGradientBrush StartPoint="0,0"
+                                         EndPoint="1,1">
+                        <GradientStop Color="#FA709A"
+                                      Offset="0.40" />
+                        <GradientStop Color="#FEE140"
+                                      Offset="1.0" />
+                    </LinearGradientBrush>
+                </Button.Background>
+            </Button>
+            <Button Grid.Row="0"
+                    Grid.Column="1"
+                    CornerRadius="15"
+                    Text="TikTok"
+                    Command="{Binding OpenDetailPageCommand}"
+                    CommandParameter="{x:Static models:Platforms.Tiktok}">
+                <Button.Background>
+                    <LinearGradientBrush StartPoint="0,0"
+                                         EndPoint="1,1">
+                        <GradientStop Color="#FC00FF"
+                                      Offset="0.0" />
+                        <GradientStop Color="#00DBDE"
+                                      Offset="1.0" />
+                    </LinearGradientBrush>
+                </Button.Background>
+            </Button>
+            <Button Grid.Row="1"
+                    Grid.Column="0"
+                    CornerRadius="15"
+                    Text="Twitch"
+                    Command="{Binding OpenDetailPageCommand}"
+                    CommandParameter="{x:Static models:Platforms.Twitch}">
+                <Button.Background>
+                    <LinearGradientBrush StartPoint="0,0"
+                                         EndPoint="1,1">
+                        <GradientStop Color="#36096D"
+                                      Offset="0.0" />
+                        <GradientStop Color="#37D5D6"
+                                      Offset="1.0" />
+                    </LinearGradientBrush>
+                </Button.Background>
+            </Button>
+            <Button Grid.Row="1"
+                    Grid.Column="1"
+                    CornerRadius="15"
+                    Text="Instagram"
+                    Command="{Binding OpenDetailPageCommand}"
+                    CommandParameter="{x:Static models:Platforms.Instagram}">
+                <Button.Background>
+                    <LinearGradientBrush StartPoint="0,0"
+                                         EndPoint="1,1">
+                        <GradientStop Color="#4158D0"
+                                      Offset="0.10" />
+                        <GradientStop Color="#C850C0"
+                                      Offset="0.50" />
+                        <GradientStop Color="#FFCC70"
+                                      Offset="1.0" />
+                    </LinearGradientBrush>
+                </Button.Background>
+            </Button>
+            <Button Grid.Row="2"
+                    Grid.ColumnSpan="2"
+                    CornerRadius="15"
+                    ContentLayout="Top, 0"
+                    Text="Twitter"
+                    Command="{Binding OpenDetailPageCommand}"
+                    CommandParameter="{x:Static models:Platforms.Twitter}">
+                <Button.Background>
+                    <LinearGradientBrush StartPoint="0,0"
+                                         EndPoint="1,1">
+                        <GradientStop Color="#2BFF88"
+                                      Offset="0.10" />
+                        <GradientStop Color="#2BD2FF"
+                                      Offset="0.50" />
+                        <GradientStop Color="#FA8BFF"
+                                      Offset="1.0" />
+                    </LinearGradientBrush>
+                </Button.Background>
+            </Button>
+        </Grid>
     </ContentPage.Content>
 </ContentPage>

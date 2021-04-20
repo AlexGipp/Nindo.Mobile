@@ -1,5 +1,7 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using Nindo.Mobile.Views;
+using Nindo.Mobile.Views.DetailPages;
 using Nindo.Net.Models;
 using Xamarin.Forms;
 
@@ -7,18 +9,10 @@ namespace Nindo.Mobile.Services.Implementations
 {
     public class NavigationService : INavigationService
     {
-        public async Task OpenViralDetailPage(Viral viralEntry)
+        public async Task OpenViralDetailPage(IList<Viral> entries)
         {
-            if ("twitch".Equals(viralEntry.Platform))
-            {
-                var twitchViralDetailPage = new TwitchViralDetailPage(viralEntry);
-                await Application.Current.MainPage.Navigation.PushAsync(twitchViralDetailPage, true);
-            }
-            else
-            {
-                var viralDetailPage = new ViralDetailPage(viralEntry);
-                await Application.Current.MainPage.Navigation.PushAsync(viralDetailPage, true);
-            }
+            if (entries != null)
+                await Application.Current.MainPage.Navigation.PushAsync(new ViralDetailPage(entries), true);
         }
     }
 }

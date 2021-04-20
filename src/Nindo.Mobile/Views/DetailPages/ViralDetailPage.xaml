@@ -1,0 +1,120 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:templateSelectors="clr-namespace:Nindo.Mobile.TemplateSelectors;assembly=Nindo.Mobile"
+             xmlns:viewModels="clr-namespace:Nindo.Mobile.ViewModels.DetailPages;assembly=Nindo.Mobile"
+             xmlns:models="clr-namespace:Nindo.Mobile.Models;assembly=Nindo.Mobile"
+             xmlns:ffimageloading="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+             xmlns:xct="http://xamarin.com/schemas/2020/toolkit"
+             x:Class="Nindo.Mobile.Views.DetailPages.ViralDetailPage"
+             Shell.NavBarHasShadow="False"
+             x:Name="DetailPage"
+             Title="{Binding Title}"
+             x:DataType="viewModels:ViralDetailPageViewModel">
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <DataTemplate x:Key="TabViewItemTemplate" x:DataType="models:ExtendedViral">
+                <Grid>
+                    <Label
+                        Text="{Binding ViralTitle}"
+                        HorizontalOptions="Center"
+                        VerticalOptions="Center" 
+                        TextColor="White"/>
+                </Grid>
+            </DataTemplate>
+
+            <DataTemplate x:Key="RegularTemplate" x:DataType="models:ExtendedViral">
+                <StackLayout Padding="20" 
+                             BackgroundColor="{AppThemeBinding Light={StaticResource LightBackgroundColor}, Dark={StaticResource DarkBackgroundColor}}">
+                    <Grid  RowSpacing="0"
+                           ColumnSpacing="0"
+                           Padding="0,20,0,20">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition  Width="80"/>
+                        </Grid.ColumnDefinitions>
+
+                        <StackLayout Grid.Column="0" Orientation="Horizontal">
+                            <Label  FontSize="25" Text="{Binding ViralEntry.Value, StringFormat='{0:N0}'}" TextColor="{StaticResource Primary}"/>
+                            <Label  FontSize="25" Text="{Binding ViralEntry.Type}"/>
+                        </StackLayout>
+
+                        <StackLayout Grid.Column="0" Grid.Row="1" Orientation="Horizontal">
+                            <Label FontSize="15" Text="Stand" Grid.Row="1"/>
+                            <Label FontSize="15" Text="{Binding Source={x:Reference DetailPage}, Path=BindingContext.FirstDayOfMonth}"/>
+                        </StackLayout>
+
+                        <ffimageloading:CachedImage Grid.Row="0" 
+                                                    Grid.Column="1"
+                                                    Grid.RowSpan="2"  
+                                                    Source="{Binding ViralEntry.Post.Channel.Avatar}" 
+                                                    HorizontalOptions="End" 
+                                                    BitmapOptimizations="True"/>
+                    </Grid>
+                    <ScrollView>
+                        <WebView Source="{Binding ViralEmbed}" 
+                                 WidthRequest="{Binding Source={x:Reference DetailPage}, Path=BindingContext.Width}" 
+                                 HeightRequest="{Binding Source={x:Reference DetailPage}, Path=BindingContext.Height}" 
+                                 VerticalOptions="CenterAndExpand" 
+                                 HorizontalOptions="CenterAndExpand"/>
+                    </ScrollView>
+                </StackLayout>
+            </DataTemplate>
+
+            <DataTemplate x:Key="TwitchTemplate" x:DataType="models:ExtendedViral">
+                <StackLayout Padding="20">
+                    <Label FontSize="15" 
+                           Text="{Binding ViralEntry.Timestamp, StringFormat='Am {0:dd.MM} um {0:HH:mm }'}"/>
+                    <StackLayout Orientation="Horizontal">
+                        <Label FontSize="25" 
+                               Text="{Binding FormattedValue}"/>
+                    </StackLayout>
+                    <Label FontSize="15" 
+                           Text="Streamer" 
+                           Padding="0,20,0,0"/>
+                    <StackLayout Orientation="Horizontal">
+                        <ffimageloading:CachedImage Source="{Binding ViralEntry.Post.Channel.Avatar}" 
+                                                    HorizontalOptions="Start" 
+                                                    HeightRequest="80" 
+                                                    BitmapOptimizations="True"/>
+                        <Label FontSize="25" 
+                               Text="{Binding ViralEntry.Post.Channel.ArtistBase.Name}" 
+                               VerticalTextAlignment="Center"/>
+                    </StackLayout>
+                    <Label FontSize="15" 
+                           Text="Stream" 
+                           Padding="0,20,0,0"/>
+                    <Label FontSize="25" 
+                           Text="{Binding ViralEntry.Post.Title}" 
+                           TextColor="{StaticResource Primary}"/>
+                    <WebView Margin="0,20,0,0" 
+                             Source="{Binding ViralEmbed}" 
+                             WidthRequest="{Binding Source={x:Reference DetailPage}, Path=BindingContext.Width}" 
+                             HeightRequest="{Binding Source={x:Reference DetailPage}, Path=BindingContext.Height}"/>
+                </StackLayout>
+            </DataTemplate>
+
+            <templateSelectors:ViralDataDetailPageSelector 
+                x:Key="ViralDataTemplateSelector"
+                RegularDataTemplate="{StaticResource RegularTemplate}"
+                TwitchDataTemplate="{StaticResource TwitchTemplate}"/>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <ContentPage.Content>
+        <xct:TabView
+            TabItemsSource="{Binding Entries}"
+            TabStripPlacement="Top"
+            TabStripBackgroundColor="#8552b4"
+            TabIndicatorColor="White"
+            TabViewItemDataTemplate="{StaticResource TabViewItemTemplate}"
+            TabContentDataTemplate="{StaticResource ViralDataTemplateSelector}" 
+            BackgroundColor="{AppThemeBinding Light={StaticResource LightBackgroundColor}, Dark={StaticResource DarkBackgroundColor}}">
+        </xct:TabView>
+    </ContentPage.Content>
+</ContentPage>
