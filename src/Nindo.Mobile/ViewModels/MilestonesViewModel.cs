@@ -3,13 +3,14 @@ using System.Linq;
 using System.Threading.Tasks;
 using Nindo.Mobile.Models;
 using Nindo.Mobile.Services;
+using Nindo.Mobile.Services.Implementations;
 using Nindo.Net.Models;
 using Xamarin.CommunityToolkit.ObjectModel;
 using Xamarin.Forms.Internals;
 
 namespace Nindo.Mobile.ViewModels
 {
-    public class MilestonesViewModel : ViewModelBase
+    public class MilestonesViewModel : NavigationAwareViewModelBase
     {
         #region command
         public IAsyncCommand RefreshCommand { get; }
@@ -18,7 +19,7 @@ namespace Nindo.Mobile.ViewModels
 
         private readonly IApiService _apiService;
 
-        public MilestonesViewModel(IApiService apiService)
+        public MilestonesViewModel(IApiService apiService, INavigationService navigationService) : base(navigationService)
         {
             Milestones = new[]
             {

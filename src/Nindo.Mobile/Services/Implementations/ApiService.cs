@@ -77,5 +77,10 @@ namespace Nindo.Mobile.Services.Implementations
         {
             return _nindoClient.SearchUserAsync(term);
         }
+
+        public Task<Artist> GetArtistInformationAsync(string userId)
+        {
+            return _nindoClient.GetArtistInformationAsync(userId);
+        }
     }
 }

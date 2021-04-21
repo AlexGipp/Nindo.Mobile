@@ -9,7 +9,7 @@ using Xamarin.CommunityToolkit.ObjectModel;
 
 namespace Nindo.Mobile.ViewModels
 {
-    public class ViralViewModel : ViewModelBase
+    public class ViralViewModel : NavigationAwareViewModelBase
     {
         private readonly IApiService _apiService;
         private readonly INavigationService _navigationService;
@@ -20,7 +20,7 @@ namespace Nindo.Mobile.ViewModels
 
         #endregion
 
-        public ViralViewModel(IApiService apiService, INavigationService navigationService)
+        public ViralViewModel(IApiService apiService, INavigationService navigationService) : base(navigationService)
         {
             _apiService = apiService;
             _navigationService = navigationService;

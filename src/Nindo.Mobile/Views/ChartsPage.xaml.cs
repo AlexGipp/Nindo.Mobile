@@ -11,7 +11,7 @@ namespace Nindo.Mobile.Views
     {
         public ChartsPage()
         {
-            BindingContext = new ChartsViewModel(new ApiService());
+            BindingContext = new ChartsViewModel(new ApiService(), new NavigationService());
             InitializeComponent();
         }
 

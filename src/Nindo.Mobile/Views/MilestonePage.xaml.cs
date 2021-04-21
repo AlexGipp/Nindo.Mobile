@@ -12,7 +12,7 @@ namespace Nindo.Mobile.Views
     {
         public MilestonePage()
         {
-            BindingContext = new MilestonesViewModel(new ApiService());
+            BindingContext = new MilestonesViewModel(new ApiService(), new NavigationService());
             InitializeComponent();
         }
 
