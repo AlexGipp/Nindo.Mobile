@@ -26,7 +26,10 @@
         <Grid BackgroundColor="{AppThemeBinding Light={StaticResource LightBackgroundColor}, Dark={StaticResource DarkBackgroundColor}}">
             <RefreshView Command="{Binding RefreshCommand}" IsRefreshing="{Binding IsBusy}">
                 <StackLayout>
-                    <CollectionView ItemsSource="{Binding Items}">
+                    <CollectionView ItemsSource="{Binding Items}"
+                                    SelectionMode="Single"
+                                    SelectionChangedCommand="{Binding OpenArtistDetailPageCommand}"
+                                    SelectedItem="{Binding SelectedRank}">
                         <CollectionView.Header>
                             <Grid RowDefinitions="*, Auto, *, Auto" ColumnDefinitions="*, *, *">
                                 <StackLayout Grid.Column="0" Grid.Row="1" VerticalOptions="Center">

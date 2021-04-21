@@ -60,7 +60,7 @@ namespace Nindo.Mobile.ViewModels
                     _ => throw new ArgumentOutOfRangeException(nameof(type), type, null)
                 };
 
-                await _navigationService.OpenViralDetailPage(entries.ToList());
+                await _navigationService.OpenViralDetailPageAsync(entries.ToList());
             }
             finally
             {
