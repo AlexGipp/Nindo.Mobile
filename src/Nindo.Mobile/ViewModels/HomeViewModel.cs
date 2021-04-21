@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using Nindo.Common.Common;
+using Nindo.Mobile.Services;
 using Nindo.Mobile.Services.Implementations;
 using Nindo.Net.Models;
 using Nindo.Net.Models.Enums;
@@ -12,8 +12,10 @@ using Size = Nindo.Net.Models.Enums.Size;
 
 namespace Nindo.Mobile.ViewModels
 {
-    public class HomeViewModel : ViewModelBase
+    public class HomeViewModel : NavigationAwareViewModelBase
     {
+        private readonly IApiService _apiService;
+
         #region commands
 
         public IAsyncCommand RefreshCommand { get; }
@@ -21,8 +23,9 @@ namespace Nindo.Mobile.ViewModels
 
         #endregion
 
-        public HomeViewModel()
+        public HomeViewModel(IApiService apiService, INavigationService navigationService) : base(navigationService)
         {
+            _apiService = apiService;
             Title = "Nindo";
 
             Items = new RangeObservableCollection<Rank>();
@@ -37,15 +40,13 @@ namespace Nindo.Mobile.ViewModels
             {
                 IsBusy = true;
 
-                var apiService = new ApiService();
-
                 await Task.Run(async () =>
                 {
-                    var youtubeTask = apiService.GetViewsScoreboardAsync(RankViewsPlatform.Youtube, Size.Small);
-                    var instTask = apiService.GetLikesScoreboardAsync(RankLikesPlatform.Instagram, Size.Small);
-                    var ttTask = apiService.GetLikesScoreboardAsync(RankLikesPlatform.TikTok, Size.Small);
-                    var twitterTask = apiService.GetLikesScoreboardAsync(RankLikesPlatform.Twitter, Size.Small);
-                    var twitchTask = apiService.GetViewersScoreboardAsync(Size.Small);
+                    var youtubeTask = _apiService.GetViewsScoreboardAsync(RankViewsPlatform.Youtube, Size.Small);
+                    var instTask = _apiService.GetLikesScoreboardAsync(RankLikesPlatform.Instagram, Size.Small);
+                    var ttTask = _apiService.GetLikesScoreboardAsync(RankLikesPlatform.TikTok, Size.Small);
+                    var twitterTask = _apiService.GetLikesScoreboardAsync(RankLikesPlatform.Twitter, Size.Small);
+                    var twitchTask = _apiService.GetViewersScoreboardAsync(Size.Small);
 
                     var taskList = new List<Task<Rank[]>>
                     {

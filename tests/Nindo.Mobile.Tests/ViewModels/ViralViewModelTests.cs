@@ -46,7 +46,7 @@ namespace Nindo.Mobile.Tests.ViewModels
             await sut.OpenDetailPageCommand.ExecuteAsync(type);
 
             // Assert
-            Mock.Get(navigationService).Verify(m => m.OpenViralDetailPage(It.IsAny<IList<Viral>>()), Times.Once);
+            Mock.Get(navigationService).Verify(m => m.OpenViralDetailPageAsync(It.IsAny<IList<Viral>>()), Times.Once);
         }
 
         [Test]

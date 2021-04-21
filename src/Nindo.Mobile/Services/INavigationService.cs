@@ -6,6 +6,10 @@ namespace Nindo.Mobile.Services
 {
     public interface INavigationService
     {
-        Task OpenViralDetailPage(IList<Viral> entries);
+        Task OpenViralDetailPageAsync(IList<Viral> entries);
+
+        Task OpenArtistDetailPageAsync(string artistId);
+
+        Task OpenSearchPageAsync();
     }
 }

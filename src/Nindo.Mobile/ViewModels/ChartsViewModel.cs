@@ -12,7 +12,7 @@ using Size = Nindo.Net.Models.Enums.Size;
 
 namespace Nindo.Mobile.ViewModels
 {
-    public class ChartsViewModel : ViewModelBase
+    public class ChartsViewModel : NavigationAwareViewModelBase
     {
         private readonly IApiService _apiService;
 
@@ -24,7 +24,7 @@ namespace Nindo.Mobile.ViewModels
 
         #endregion
 
-        public ChartsViewModel(IApiService apiService)
+        public ChartsViewModel(IApiService apiService, INavigationService navigationService) : base(navigationService)
         {
             _apiService = apiService;
             Title = "Nindo";

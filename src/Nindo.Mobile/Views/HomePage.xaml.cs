@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics;
+using Nindo.Mobile.Services.Implementations;
 using Nindo.Mobile.ViewModels;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -11,7 +12,7 @@ namespace Nindo.Mobile.Views
         public HomePage()
         {
             InitializeComponent();
-            BindingContext = new HomeViewModel();
+            BindingContext = new HomeViewModel(new ApiService(), new NavigationService());
         }
 
         protected override void OnAppearing()
