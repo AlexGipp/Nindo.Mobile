@@ -25,6 +25,7 @@ namespace Nindo.Mobile.ViewModels.DetailPages
                 await Task.Run(async () =>
                 {
                     Artist = _apiService.GetArtistInformationAsync(_artistId).Result;
+                    Title = Artist.Name;
                 });
             }
             finally
