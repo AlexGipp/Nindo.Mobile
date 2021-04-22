@@ -27,9 +27,7 @@
             <RefreshView Command="{Binding RefreshCommand}" IsRefreshing="{Binding IsBusy}">
                 <StackLayout>
                     <CollectionView ItemsSource="{Binding Items}"
-                                    SelectionMode="Single"
-                                    SelectionChangedCommand="{Binding OpenArtistDetailPageCommand}"
-                                    SelectedItem="{Binding SelectedRank}">
+                                    SelectionMode="Single">
                         <CollectionView.Header>
                             <Grid RowDefinitions="*, Auto, *, Auto" ColumnDefinitions="*, *, *">
                                 <StackLayout Grid.Column="0" Grid.Row="1" VerticalOptions="Center">
@@ -89,8 +87,12 @@
                                                Padding="0,0,20,0"
                                                Text="{Binding Value, Converter={StaticResource longToMetricConverter}}" />
                                     </Grid>
+                                    <Frame.GestureRecognizers>
+                                        <TapGestureRecognizer Command="{Binding OpenArtistDetailPageCommand, Source={RelativeSource AncestorType={x:Type viewModels:NavigationAwareViewModelBase}}}"
+                                                              CommandParameter="{Binding .}"/>
+                                    </Frame.GestureRecognizers>
                                 </Frame>
-                            </DataTemplate>
+                            </DataTemplate> 
                         </CollectionView.ItemTemplate>
                         <CollectionView.Footer>
                             <StackLayout>

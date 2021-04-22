@@ -14,7 +14,7 @@ namespace Nindo.Mobile.ViewModels
         #region commands
 
         public IAsyncCommand OpenSearchCommand { get; }
-        public IAsyncCommand OpenArtistDetailPageCommand { get; }
+        public IAsyncCommand<Rank> OpenArtistDetailPageCommand { get; }
 
         #endregion
 
@@ -23,7 +23,7 @@ namespace Nindo.Mobile.ViewModels
             _navigationService = navigationService;
 
             OpenSearchCommand = new AsyncCommand(NavigateToSearchPageAsync, CanExecute);
-            OpenArtistDetailPageCommand = new AsyncCommand(NavigateToArtistDetailPageAsync, CanExecute);
+            OpenArtistDetailPageCommand = new AsyncCommand<Rank>(NavigateToArtistDetailPageAsync, CanExecute);
         }
 
         private async Task NavigateToSearchPageAsync()
@@ -31,30 +31,14 @@ namespace Nindo.Mobile.ViewModels
             await _navigationService.OpenSearchPageAsync();
         }
 
-        private async Task NavigateToArtistDetailPageAsync()
+        private async Task NavigateToArtistDetailPageAsync(Rank selectedRank)
         {
-            await _navigationService.OpenArtistDetailPageAsync(SelectedRank.ArtistId);
+            await _navigationService.OpenArtistDetailPageAsync(selectedRank.ArtistId);
         }
 
         private bool CanExecute(object arg)
         {
             return !IsBusy;
         }
-
-        #region properties
-
-        private Rank _selectedRank;
-
-        public Rank SelectedRank
-        {
-            get => _selectedRank;
-            set
-            {
-                _selectedRank = value;
-                OnPropertyChanged();
-            }
-        }
-
-        #endregion
     }
 }

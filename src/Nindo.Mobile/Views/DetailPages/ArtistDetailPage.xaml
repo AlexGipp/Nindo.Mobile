@@ -1,10 +1,13 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewModels="clr-namespace:Nindo.Mobile.ViewModels.DetailPages;assembly=Nindo.Mobile"
+             xmlns:nindoNet="clr-namespace:Nindo.Net.Models;assembly=Nindo.Net"
              xmlns:ffimageloading="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
              xmlns:converters="clr-namespace:Nindo.Mobile.Converters;assembly=Nindo.Mobile"
              xmlns:xct="http://xamarin.com/schemas/2020/toolkit"
              x:Class="Nindo.Mobile.Views.DetailPages.ArtistDetailPage"
+             x:DataType="viewModels:ArtistDetailPageViewModel"
              Title="{Binding Title}">
 
     <ContentPage.Resources>
@@ -34,7 +37,7 @@
                         </CollectionView.ItemsLayout>
                         <CollectionView.ItemTemplate>
                         <DataTemplate>
-                            <ContentView>
+                            <ContentView x:DataType="nindoNet:Genre">
                                 <Frame BorderColor="#ababab" CornerRadius="10" Margin="0,0,3,0" HeightRequest="20" Padding="5">
                                     <Label Text="{Binding Name}" VerticalTextAlignment="Center" HorizontalTextAlignment="Center"/>
                                 </Frame>
@@ -49,7 +52,7 @@
                 <CollectionView ItemsSource="{Binding Artist.Channels}">
                     <CollectionView.ItemTemplate>
                         <DataTemplate>
-                            <ContentView>
+                            <ContentView x:DataType="nindoNet:ArtistChannel">
                                 <Frame BackgroundColor="#ececec" CornerRadius="20" Margin="0,0,0,10">
                                     <Grid ColumnDefinitions="50, *, 50">
                                         <Frame CornerRadius="100" Margin="0" Padding="0" Grid.Column="0">
@@ -69,7 +72,7 @@
                                         <Label Grid.Column="1"
                                                Padding="5,0,0,0"
                                                VerticalOptions="Center"
-                                               Text="{Binding ChannelId}"
+                                               Text="{Binding Name}"
                                                TextColor="{AppThemeBinding Light={StaticResource LightPrimaryTextColor}, Dark={StaticResource DarkPrimaryTextColor}}"
                                                FontSize="17"/>
                                     </Grid>

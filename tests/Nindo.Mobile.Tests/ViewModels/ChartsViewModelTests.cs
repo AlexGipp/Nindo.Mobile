@@ -14,11 +14,14 @@ namespace Nindo.Mobile.Tests.ViewModels
     public class ChartsViewModelTests
     {
         private IApiService _apiService = Mock.Of<IApiService>();
+        private INavigationService _navigationService = Mock.Of<INavigationService>();
+
 
         [OneTimeSetUp]
         public void Init()
         {
             _apiService = Mock.Of<IApiService>();
+            _navigationService = Mock.Of<INavigationService>();
 
             Mock.Get(_apiService).Setup(api => api.GetViewsScoreboardAsync(RankViewsPlatform.Youtube, Size.Big))
                 .ReturnsAsync(CreateRanks(100));
@@ -51,7 +54,7 @@ namespace Nindo.Mobile.Tests.ViewModels
         public async Task LoadDefaultData_NoDataProvided_LoadDefaultData()
         {
             // Arrange
-            var sut = new ChartsViewModel(_apiService);
+            var sut = new ChartsViewModel(_apiService, _navigationService);
 
             // Act
             await sut.LoadDefaultData();
@@ -70,7 +73,7 @@ namespace Nindo.Mobile.Tests.ViewModels
         public void ChangePlatformAsync_NewPlatform_ChangePlatform(string platform, string previousPlatform, int filterCount)
         {
             // Arrange
-            var sut = new ChartsViewModel(_apiService);
+            var sut = new ChartsViewModel(_apiService, _navigationService);
 
             sut.CurrentPlatform = previousPlatform;
 
@@ -87,7 +90,7 @@ namespace Nindo.Mobile.Tests.ViewModels
         public void ChangeFilterAsync_NewFilter_ChangeFilter()
         {
             // Arrange
-            var sut = new ChartsViewModel(_apiService);
+            var sut = new ChartsViewModel(_apiService, _navigationService);
 
             // Act
             sut.ChangeFilterCommand.ExecuteAsync(sut.YoutubeFilters[2]);
@@ -102,7 +105,7 @@ namespace Nindo.Mobile.Tests.ViewModels
         public void Refresh_NoDataProvided_RefreshData()
         {
             // Arrange
-            var sut = new ChartsViewModel(_apiService);
+            var sut = new ChartsViewModel(_apiService, _navigationService);
             sut.SelectedPickerItem = sut.InstagramFilters[3];
 
             // Act
@@ -119,7 +122,7 @@ namespace Nindo.Mobile.Tests.ViewModels
         public void Refresh_BusyState_HaveState(bool isBusy, bool canExecute)
         {
             // Arrange
-            var sut = new ChartsViewModel(_apiService) {IsBusy = isBusy};
+            var sut = new ChartsViewModel(_apiService, _navigationService) {IsBusy = isBusy};
 
 
             // Act
@@ -134,7 +137,7 @@ namespace Nindo.Mobile.Tests.ViewModels
         public void ChangePlatformAsync_BusyState_HaveState(bool isBusy, bool canExecute)
         {
             // Arrange
-            var sut = new ChartsViewModel(_apiService);
+            var sut = new ChartsViewModel(_apiService, _navigationService);
 
             sut.IsBusy = isBusy;
 
@@ -150,7 +153,7 @@ namespace Nindo.Mobile.Tests.ViewModels
         public void ChangeFilterAsync_BusyState_HaveState(bool isBusy, bool canExecute)
         {
             // Arrange
-            var sut = new ChartsViewModel(_apiService);
+            var sut = new ChartsViewModel(_apiService, _navigationService);
 
             sut.IsBusy = isBusy;
 

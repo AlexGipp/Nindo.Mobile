@@ -29,7 +29,9 @@ namespace Nindo.Mobile.Tests.ViewModels
         {
             // Arrange 
             var apiService = Mock.Of<IApiService>();
-            var sut = new MilestonesViewModel(apiService);
+            var navigationService = Mock.Of<INavigationService>();
+
+            var sut = new MilestonesViewModel(apiService, navigationService);
 
             Mock.Get(apiService).Setup(api => api.GetMilestonesAsync())
                 .ReturnsAsync(CreateMilestones(3));
@@ -49,7 +51,9 @@ namespace Nindo.Mobile.Tests.ViewModels
         {
             // Arrange 
             var apiService = Mock.Of<IApiService>();
-            var sut = new MilestonesViewModel(apiService);
+            var navigationService = Mock.Of<INavigationService>();
+
+            var sut = new MilestonesViewModel(apiService, navigationService);
 
             // Act
             await sut.RefreshCommand.ExecuteAsync();
@@ -64,7 +68,9 @@ namespace Nindo.Mobile.Tests.ViewModels
         {
             // Arrange 
             var apiService = Mock.Of<IApiService>();
-            var sut = new MilestonesViewModel(apiService);
+            var navigationService = Mock.Of<INavigationService>();
+
+            var sut = new MilestonesViewModel(apiService, navigationService);
 
             sut.IsBusy = false;
             sut.IsRefreshing = false;
@@ -83,7 +89,9 @@ namespace Nindo.Mobile.Tests.ViewModels
         {
             // Arrange 
             var apiService = Mock.Of<IApiService>();
-            var sut = new MilestonesViewModel(apiService);
+            var navigationService = Mock.Of<INavigationService>();
+
+            var sut = new MilestonesViewModel(apiService, navigationService);
 
             sut.IsBusy = isBusy;
             sut.IsRefreshing = isRefreshing;

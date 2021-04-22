@@ -1,7 +1,12 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using FluentAssertions;
+using Moq;
+using Nindo.Mobile.Services;
 using Nindo.Mobile.ViewModels;
+using Nindo.Net.Models;
+using Nindo.Net.Models.Enums;
 using NUnit.Framework;
 
 namespace Nindo.Mobile.Tests.ViewModels
@@ -9,11 +14,47 @@ namespace Nindo.Mobile.Tests.ViewModels
     [TestFixture]
     public class HomeViewModelTests
     {
+        private IApiService _apiService = Mock.Of<IApiService>();
+        private INavigationService _navigationService = Mock.Of<INavigationService>();
+
+        [OneTimeSetUp]
+        public void Init()
+        {
+            _apiService = Mock.Of<IApiService>();
+            _navigationService = Mock.Of<INavigationService>();
+
+            Mock.Get(_apiService).Setup(api => api.GetViewsScoreboardAsync(RankViewsPlatform.Youtube, Size.Small))
+                .ReturnsAsync(CreateRanks(10));
+            Mock.Get(_apiService).Setup(api => api.GetSubGainScoreboardAsync(RankAllPlatform.Youtube, Size.Small))
+                .ReturnsAsync(CreateRanks(10));
+            Mock.Get(_apiService).Setup(api => api.GetLikesScoreboardAsync(RankLikesPlatform.Instagram, Size.Small))
+                .ReturnsAsync(CreateRanks(10));
+            Mock.Get(_apiService).Setup(api => api.GetScoreboardAsync(RankAllPlatform.Instagram, Size.Small))
+                .ReturnsAsync(CreateRanks(10));
+            Mock.Get(_apiService).Setup(api => api.GetLikesScoreboardAsync(RankLikesPlatform.TikTok, Size.Small))
+                .ReturnsAsync(CreateRanks(10));
+            Mock.Get(_apiService).Setup(api => api.GetLikesScoreboardAsync(RankLikesPlatform.Twitter, Size.Small))
+                .ReturnsAsync(CreateRanks(10));
+            Mock.Get(_apiService).Setup(api => api.GetViewersScoreboardAsync(Size.Small))
+                .ReturnsAsync(CreateRanks(10));
+        }
+
+        private Rank[] CreateRanks(int count)
+        {
+            var ranks = new List<Rank>();
+            for (int i = 0; i < count; i++)
+            {
+                ranks.Add(new Rank());
+            }
+
+            return ranks.ToArray();
+        }
+
         [Test]
         public async Task Refresh_NoDataProvided_RefreshData()
         {
             // Arrange
-            var sut = new HomeViewModel();
+            var sut = new HomeViewModel(_apiService, _navigationService);
 
             // Act
             await sut.RefreshCommand.ExecuteAsync();
@@ -32,7 +73,7 @@ namespace Nindo.Mobile.Tests.ViewModels
         public void ChangePlatform_SamePlatform_Return(string platform, string previousPlatform)
         {
             // Arrange
-            var sut = new HomeViewModel();
+            var sut = new HomeViewModel(_apiService, _navigationService);
             sut.CurrentPlatform = previousPlatform;
 
             // Act
@@ -50,7 +91,7 @@ namespace Nindo.Mobile.Tests.ViewModels
         public void ChangePlatform_NewPlatform_ChangePlatform(string platform, string previousPlatform)
         {
             // Arrange
-            var sut = new HomeViewModel();
+            var sut = new HomeViewModel(_apiService, _navigationService);
             sut.CurrentPlatform = previousPlatform;
 
             // Act
@@ -65,7 +106,7 @@ namespace Nindo.Mobile.Tests.ViewModels
         public void ChangePlatform_InvalidPlatform_ThrowException(string platform)
         {
             // Arrange
-            var sut = new HomeViewModel();
+            var sut = new HomeViewModel(_apiService, _navigationService);
 
             // Act
             Action act = () => sut.ChangePlatformCommand.Execute(platform);
@@ -78,7 +119,8 @@ namespace Nindo.Mobile.Tests.ViewModels
         public void Refresh_IsBusyFalse_CanExecute()
         {
             // Arrange
-            var sut = new HomeViewModel();
+            var sut = new HomeViewModel(_apiService, _navigationService);
+
             sut.IsBusy = false;
 
             // Act
@@ -92,7 +134,8 @@ namespace Nindo.Mobile.Tests.ViewModels
         public void Refresh_IsBusyTrue_CantExecute()
         {
             // Arrange
-            var sut = new HomeViewModel();
+            var sut = new HomeViewModel(_apiService, _navigationService);
+
             sut.IsBusy = true;
 
             // Act
@@ -106,7 +149,8 @@ namespace Nindo.Mobile.Tests.ViewModels
         public void ChangePlatform_IsBusyFalse_CanExecute()
         {
             // Arrange
-            var sut = new HomeViewModel();
+            var sut = new HomeViewModel(_apiService, _navigationService);
+
             sut.IsBusy = false;
 
             // Act
@@ -120,7 +164,8 @@ namespace Nindo.Mobile.Tests.ViewModels
         public void ChangePlatform_IsBusyTrue_CantExecute()
         {
             // Arrange
-            var sut = new HomeViewModel();
+            var sut = new HomeViewModel(_apiService, _navigationService);
+
             sut.IsBusy = true;
 
             // Act
