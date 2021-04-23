@@ -39,5 +39,7 @@ namespace Nindo.Mobile.Services
         public Task<Coupons> GetCouponsByCategoryAsync(string category, int offset);
 
         public Task<Coupons> GetCouponsByBranchAsync(string id, int offset);
+
+        public Task<Search[]> SearchUserAsync(string term);
     }
 }

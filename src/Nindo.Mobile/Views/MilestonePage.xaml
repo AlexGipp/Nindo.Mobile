@@ -14,14 +14,16 @@
             Shell.NavBarHasShadow="False"
             x:DataType="viewModels:MilestonesViewModel">
 
-
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Order="Primary" Icon="search.png" Command="{Binding OpenSearchCommand}"/>
+    </ContentPage.ToolbarItems>
 
     <ContentPage.Resources>
         <converters:IconConverter x:Key="IconConverter" />
         <ResourceDictionary>
 
             <DataTemplate x:Key="TabViewItemTemplate">
-                    <Grid>
+                <Grid>
                     <Label
                         Text="{Binding MilestoneTitle}"
                         HorizontalOptions="Center"
@@ -31,48 +33,53 @@
             </DataTemplate>
 
             <DataTemplate x:Key="TabContentTemplate">
-                    <RefreshView Command="{Binding Source={x:Reference MilestonesPage}, Path=BindingContext.RefreshCommand}" IsRefreshing="{Binding Source={x:Reference MilestonesPage}, Path=BindingContext.IsRefreshing}">
-                        <CollectionView ItemsSource="{Binding Milestones}">
-                            <CollectionView.ItemTemplate>
-                                <DataTemplate>
-                                    <Frame BorderColor="#eeeeee" Padding="0" x:DataType="models1:Milestone" CornerRadius="0">
-                                        <Grid Padding="0" RowSpacing="0" RowDefinitions="Auto, *" ColumnDefinitions="80,140,70,*">
-                                            <ffimageloading:CachedImage Grid.RowSpan="1"
+                <RefreshView Command="{Binding Source={x:Reference MilestonesPage}, Path=BindingContext.RefreshCommand}" IsRefreshing="{Binding Source={x:Reference MilestonesPage}, Path=BindingContext.IsRefreshing}">
+                    <CollectionView ItemsSource="{Binding Milestones}">
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate>
+                                <Frame 
+                                    BorderColor="{AppThemeBinding Light={StaticResource LightFrameColor}, Dark={StaticResource DarkFrameColor}}" 
+                                    BackgroundColor="{AppThemeBinding Light={StaticResource LightBackgroundColor}, Dark={StaticResource DarkBackgroundColor}}" 
+                                    Padding="0" 
+                                    x:DataType="models1:Milestone" 
+                                    CornerRadius="0">
+                                    <Grid Padding="0" RowSpacing="0" RowDefinitions="Auto, *" ColumnDefinitions="80,140,70,*">
+                                        <ffimageloading:CachedImage Grid.RowSpan="1"
                                                                         Source="{Binding MilestoneChannel.Avatar}"
                                                                         Aspect="AspectFit"
                                                                         HeightRequest="80"
                                                                         BitmapOptimizations="True"/>
-                                            <Label
+                                        <Label
                                                     Grid.Row="0"
                                                     Grid.Column="1"
                                                     Text="{Binding MilestoneChannel.ArtistBase.Name}"
                                                     FontAttributes="Bold"
-                                                    TextColor="#5a5a5a"
+                                                    TextColor="{AppThemeBinding Light={StaticResource LightPrimaryTextColor}, Dark={StaticResource DarkPrimaryTextColor}}"
                                                     VerticalTextAlignment="Center" />
-                                            <Image
+                                        <Image
                                                     Grid.Column="2"
                                                     WidthRequest="34"
                                                     HeightRequest="34"
                                                     VerticalOptions="Center"
                                                     Source="{Binding MilestoneChannel.Platform, Converter={StaticResource IconConverter}}" 
                                                     xct:IconTintColorEffect.TintColor="#ababab"/>
-                                            <Label Grid.Row="0"
+                                        <Label Grid.Row="0"
                                                    Grid.Column="3"
                                                    FontAttributes="Italic"
                                                    FontSize="20"
-                                                   TextColor="#5a5a5a"
+                                                   TextColor="{AppThemeBinding Light={StaticResource LightPrimaryTextColor}, Dark={StaticResource DarkPrimaryTextColor}}"
                                                    VerticalTextAlignment="Center"
                                                    Text="{Binding CurrentSubs, StringFormat='{0:N0}'}" />
-                                        </Grid>
-                                    </Frame>
-                                </DataTemplate>
-                            </CollectionView.ItemTemplate>
-                            <CollectionView.Footer>
-                                <Label Grid.Row="3" Grid.ColumnSpan="3" TextColor="#ababab"
+                                    </Grid>
+                                </Frame>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                        <CollectionView.Footer>
+                            <Label Grid.Row="3" Grid.ColumnSpan="3" TextColor="#ababab"
                                    HorizontalTextAlignment="End" Padding="0,5,10,5" Text="Aktuelle Follower"/>
-                            </CollectionView.Footer>
-                        </CollectionView>
-                    </RefreshView>
+                        </CollectionView.Footer>
+                    </CollectionView>
+                </RefreshView>
             </DataTemplate>
 
         </ResourceDictionary>
@@ -85,7 +92,8 @@
             TabStripBackgroundColor="#8552b4"
             TabIndicatorColor="White"
             TabViewItemDataTemplate="{StaticResource TabViewItemTemplate}"
-            TabContentDataTemplate="{StaticResource TabContentTemplate}" >
+            TabContentDataTemplate="{StaticResource TabContentTemplate}" 
+            BackgroundColor="{AppThemeBinding Light={StaticResource LightBackgroundColor}, Dark={StaticResource DarkBackgroundColor}}">
         </xct:TabView>
     </ContentPage.Content>
 </ContentPage>

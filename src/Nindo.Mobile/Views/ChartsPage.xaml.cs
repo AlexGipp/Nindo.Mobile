@@ -1,5 +1,4 @@
 ﻿using System.Diagnostics;
-using System.Linq;
 using Nindo.Mobile.Services.Implementations;
 using Nindo.Mobile.ViewModels;
 using Xamarin.Forms;
@@ -12,7 +11,7 @@ namespace Nindo.Mobile.Views
     {
         public ChartsPage()
         {
-            BindingContext = new ChartsViewModel();
+            BindingContext = new ChartsViewModel(new ApiService());
             InitializeComponent();
         }
 
@@ -20,7 +19,12 @@ namespace Nindo.Mobile.Views
         {
             base.OnAppearing();
 
-            
+            if (BindingContext is ChartsViewModel vm && vm.ResultItems.Count == 0)
+                vm.LoadDefaultData()
+                    .ContinueWith(t =>
+                    {
+                        if (t.IsFaulted) Debug.WriteLine(t.Exception?.Message);
+                    });
         }
     }
 }

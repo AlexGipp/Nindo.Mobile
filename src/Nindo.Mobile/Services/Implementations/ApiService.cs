@@ -97,5 +97,10 @@ namespace Nindo.Mobile.Services.Implementations
         {
             return _nindoClient.GetCouponsByBranchAsync(id, offset);
         }
+        
+        public Task<Search[]> SearchUserAsync(string term)
+        {
+            return _nindoClient.SearchUserAsync(term);
+        }
     }
 }
