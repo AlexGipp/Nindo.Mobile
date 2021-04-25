@@ -64,6 +64,10 @@ namespace Nindo.Mobile.ViewModels
 
             Coupons[1].ComboboxItems = new RangeObservableCollection<CouponBrands>() { };
             Coupons[2].ComboboxItems = new RangeObservableCollection<CouponBrands>() { };
+
+            Coupons[0].pageNumber = 0;
+            Coupons[1].pageNumber = 0;
+            Coupons[2].pageNumber = 0;
         }
 
         public async Task LoadComboboxItemsAsync()
@@ -85,6 +89,13 @@ namespace Nindo.Mobile.ViewModels
                     Coupons[2].ComboboxItems.AddRange(categoryItems);
 
                 });
+                Device.BeginInvokeOnMainThread(() => {
+
+                    var noFilter = _apiService.GetCouponsAsync(0);
+
+                    Coupons[1].Coupons.AddRange(noFilter.Result.Coupon);
+                    Coupons[2].Coupons.AddRange(noFilter.Result.Coupon);    
+                });
             }
         }
 
@@ -101,7 +112,7 @@ namespace Nindo.Mobile.ViewModels
                         if (Coupons[1].ComboboxItems.Contains(obj))
                         {
                             Coupons[1].Coupons.Clear();
-                            _pageNumber = 0;
+                            Coupons[1].pageNumber = 0;
                             hasMore = true;
                             selectedItem = obj;
                             await LoadCouponsAsync();
@@ -116,7 +127,7 @@ namespace Nindo.Mobile.ViewModels
                         if (Coupons[2].ComboboxItems.Contains(obj))
                         {
                             Coupons[2].Coupons.Clear();
-                            _pageNumber = 0;
+                            Coupons[2].pageNumber = 0;
                             hasMore = true;
                             selectedItem = obj;
                             await LoadCouponsAsync();
@@ -135,7 +146,6 @@ namespace Nindo.Mobile.ViewModels
         }
 
         private bool hasMore = true;
-        int _pageNumber;
         public async Task LoadCouponsAsync()
         {
             try
@@ -150,14 +160,14 @@ namespace Nindo.Mobile.ViewModels
                         switch (SelectedTabIndex)
                         {
                             case 0:
-                                var noFilter = await _apiService.GetCouponsAsync(_pageNumber);
+                                var noFilter = await _apiService.GetCouponsAsync(Coupons[0].pageNumber);
                                 Device.BeginInvokeOnMainThread(() =>
                                 {
                                     Coupons[0].Coupons.AddRange(noFilter.Coupon);
                                 });
                                 if (noFilter.HasMore == "true")
                                 {
-                                    _pageNumber += 20;
+                                    Coupons[0].pageNumber += 20;
                                 }
                                 else
                                 {
@@ -166,14 +176,14 @@ namespace Nindo.Mobile.ViewModels
                                 break;
 
                             case 1:
-                                    var brandFilter = await _apiService.GetCouponsByBranchAsync(selectedItem.Id, _pageNumber);
+                                    var brandFilter = await _apiService.GetCouponsByBranchAsync(selectedItem.Id, Coupons[1].pageNumber);
                                     Device.BeginInvokeOnMainThread(() =>
                                     {
                                         Coupons[1].Coupons.AddRange(brandFilter.Coupon);
                                     });
                                     if (brandFilter.HasMore == "true")
                                     {
-                                        _pageNumber += 20;
+                                        Coupons[1].pageNumber += 20;
                                     }
                                     else
                                     {
@@ -184,14 +194,14 @@ namespace Nindo.Mobile.ViewModels
                             case 2:
                                     try
                                     {
-                                        var categoryFilter = await _apiService.GetCouponsByCategoryAsync(selectedItem.Name, _pageNumber);
+                                        var categoryFilter = await _apiService.GetCouponsByCategoryAsync(selectedItem.Name, Coupons[2].pageNumber);
                                         Device.BeginInvokeOnMainThread(() =>
                                         {
                                             Coupons[2].Coupons.AddRange(categoryFilter.Coupon);
                                         });
                                         if (categoryFilter.HasMore == "true")
                                         {
-                                            _pageNumber += 20;
+                                            Coupons[2].pageNumber += 20;
                                         }
                                         else
                                         {
@@ -237,6 +247,18 @@ namespace Nindo.Mobile.ViewModels
         {
             try
             {
+                switch (SelectedTabIndex)
+                {
+                    case 0:
+                        Coupons[0].pageNumber = 0;
+                        break;
+                    case 1:
+                        Coupons[1].pageNumber = 0;
+                        break;
+                    case 2:
+                        Coupons[2].pageNumber = 0;
+                        break;
+                }
                 IsRefreshing = true;
 
                 await LoadCouponsAsync();

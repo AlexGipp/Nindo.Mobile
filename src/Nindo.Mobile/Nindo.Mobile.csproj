@@ -115,9 +115,5 @@
 	<ItemGroup>
 	  <ProjectReference Include="..\Nindo.Common\Nindo.Common.csproj" />
 	</ItemGroup>
-
-	<ItemGroup>
-	  <Folder Include="Controls\" />
-	</ItemGroup>
 </Project> 
 
