@@ -250,12 +250,15 @@ namespace Nindo.Mobile.ViewModels
                 switch (SelectedTabIndex)
                 {
                     case 0:
+                        Coupons[0].Coupons.Clear();
                         Coupons[0].pageNumber = 0;
                         break;
                     case 1:
+                        Coupons[1].Coupons.Clear();
                         Coupons[1].pageNumber = 0;
                         break;
                     case 2:
+                        Coupons[2].Coupons.Clear();
                         Coupons[2].pageNumber = 0;
                         break;
                 }
