@@ -7,6 +7,7 @@
              xmlns:models1="clr-namespace:Nindo.Net.Models;assembly=Nindo.Net" 
              xmlns:viewmodels="clr-namespace:Nindo.Mobile.ViewModels" 
              xmlns:combobox="clr-namespace:Syncfusion.XForms.ComboBox;assembly=Syncfusion.SfComboBox.XForms" 
+             Shell.NavBarHasShadow="False"
              x:DataType="viewmodels:CouponViewModel"
              x:Class="Nindo.Mobile.Views.CouponPage"
              x:Name="CouponsPage"
@@ -38,9 +39,7 @@
                     <CollectionView ItemsSource="{Binding Coupons}"
                                     RemainingItemsThreshold="10" 
                                     RemainingItemsThresholdReachedCommand="{Binding Source={x:Reference CouponsPage}, Path=BindingContext.LoadMoreCouponsCommand}"
-                                    SelectionMode="Single"
-                                    SelectedItem="{Binding Source={x:Reference CouponsPage}, Path=BindingContext.CollectionViewSelectedItem}"
-                                    SelectionChangedCommand="{Binding Source={x:Reference CouponsPage}, Path=BindingContext.CollectionViewSelectionChangedCommand}">
+                                    SelectionMode="Single">
                         <CollectionView.Header>
                             <StackLayout VerticalOptions="Start" HorizontalOptions="Start" Padding="30">
                                 <combobox:SfComboBox HeightRequest="40"
@@ -84,6 +83,10 @@
                                                            VerticalTextAlignment="Center"
                                                            Text="{Binding Discount}"/>
                                     </Grid>
+                                    <Frame.GestureRecognizers>
+                                        <TapGestureRecognizer Command="{Binding Source={x:Reference CouponsPage}, Path=BindingContext.CollectionViewSelectionChangedCommand}"
+                                                              CommandParameter="{Binding .}"/>
+                                    </Frame.GestureRecognizers>
                                 </Frame>
                             </DataTemplate>
                         </CollectionView.ItemTemplate>

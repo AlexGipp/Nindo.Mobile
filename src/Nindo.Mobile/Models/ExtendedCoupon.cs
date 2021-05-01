@@ -11,7 +11,9 @@ namespace Nindo.Mobile.Models
     {
         public string CouponTitle { get; set; }
 
-        public int pageNumber; 
+        public int pageNumber;
+
+        public CouponBrands selectedItem;
 
         private RangeObservableCollection<Coupon> _coupons = new RangeObservableCollection<Coupon>();
 
