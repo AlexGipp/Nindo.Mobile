@@ -25,16 +25,24 @@ namespace Nindo.Mobile.Views
         {
             base.OnAppearing();
 
-            if (BindingContext is CouponViewModel vm && vm.Coupons.Any(m => !m.ComboboxItems.Any()))
+            if (BindingContext is CouponViewModel vm)
             {
-                Device.BeginInvokeOnMainThread(() =>
+                if (vm.Coupons.Any(m => !m.ComboboxItems.Any()))
                 {
                     vm.LoadComboboxItemsAsync()
                         .ContinueWith(t =>
                         {
                             if (t.IsFaulted) Debug.WriteLine(t.Exception?.Message);
                         });
-                });
+                }
+                if (!vm.Coupons[1].Coupons.Any() && !vm.Coupons[2].Coupons.Any())
+                {
+                    vm.LoadDefaultItems()
+                        .ContinueWith(t =>
+                        {
+                            if (t.IsFaulted) Debug.WriteLine(t.Exception?.Message);
+                        });
+                }
             }
         }
     }
