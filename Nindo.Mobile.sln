@@ -11,7 +11,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Nindo.Mobile", "src\Nindo.M
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Nindo.Common", "src\Nindo.Common\Nindo.Common.csproj", "{3502BF5A-9FAD-4A31-A12D-72BAC7016DEB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nindo.Mobile.Tests", "tests\Nindo.Mobile.Tests\Nindo.Mobile.Tests.csproj", "{43414DF6-8560-44BD-8E11-AB9507308AF1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Nindo.Mobile.Tests", "tests\Nindo.Mobile.Tests\Nindo.Mobile.Tests.csproj", "{43414DF6-8560-44BD-8E11-AB9507308AF1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

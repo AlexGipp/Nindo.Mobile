@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Nindo.Mobile.Models;
 using Nindo.Mobile.Services;
 using Nindo.Mobile.Services.Implementations;
+using Nindo.Mobile.ViewModels.BaseViewModels;
 using Nindo.Net.Models;
 using Xamarin.CommunityToolkit.ObjectModel;
 using Xamarin.Forms.Internals;
@@ -12,7 +13,8 @@ namespace Nindo.Mobile.ViewModels
 {
     public class MilestonesViewModel : NavigationAwareViewModelBase
     {
-        #region command
+        #region Commands
+
         public IAsyncCommand RefreshCommand { get; }
 
         #endregion

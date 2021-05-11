@@ -4,6 +4,12 @@
 		<TargetFramework>netstandard2.1</TargetFramework>
 		<ProduceReferenceAssembly>true</ProduceReferenceAssembly>
 	</PropertyGroup>
+
+	<ItemGroup>
+	  <Compile Remove="Controls\**" />
+	  <EmbeddedResource Remove="Controls\**" />
+	  <None Remove="Controls\**" />
+	</ItemGroup>
   
 	<ItemGroup>
 	  <None Remove="Resources\charts.svg" />
@@ -27,7 +33,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Humanizer.Core" Version="2.8.26" />
+		<PackageReference Include="Humanizer.Core" Version="2.10.1" />
 		<PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
 		<PackageReference Include="Nindo.Net" Version="1.0.7" />
 		<PackageReference Include="Refractored.MvvmHelpers" Version="1.6.2" />
@@ -63,6 +69,12 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <Compile Update="Views\DetailPages\ArtistOverviewPage.xaml.cs">
+	    <DependentUpon>ArtistOverviewPage.xaml</DependentUpon>
+	  </Compile>
+	  <Compile Update="Views\DetailPages\PlatformDetailPages\YoutubeArtistDetailPage.xaml.cs">
+	    <DependentUpon>YoutubeArtistDetailPage.xaml</DependentUpon>
+	  </Compile>
 	  <Compile Update="Views\HomePage.xaml.cs">
 	    <DependentUpon>HomePage.xaml</DependentUpon>
 	  </Compile>
@@ -72,7 +84,10 @@
 		<EmbeddedResource Update="Views\ChartsPage.xaml">
 		  <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
 		</EmbeddedResource>
-		<EmbeddedResource Update="Views\DetailPages\ArtistDetailPage.xaml">
+		<EmbeddedResource Update="Views\DetailPages\PlatformDetailPages\YoutubeArtistDetailPage.xaml">
+		  <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+		</EmbeddedResource>
+		<EmbeddedResource Update="Views\DetailPages\ArtistOverviewPage.xaml">
 		  <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
 		</EmbeddedResource>
 		<EmbeddedResource Update="Views\HomePage.xaml">
@@ -94,9 +109,5 @@
 
 	<ItemGroup>
 	  <ProjectReference Include="..\Nindo.Common\Nindo.Common.csproj" />
-	</ItemGroup>
-
-	<ItemGroup>
-	  <Folder Include="Controls\" />
 	</ItemGroup>
 </Project> 

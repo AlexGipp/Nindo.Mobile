@@ -11,6 +11,7 @@
              xmlns:toolkit="http://xamarin.com/schemas/2020/toolkit"
              xmlns:converters="clr-namespace:Nindo.Mobile.Converters;assembly=Nindo.Mobile"
              xmlns:ffimageloading="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+             xmlns:baseViewModels="clr-namespace:Nindo.Mobile.ViewModels.BaseViewModels;assembly=Nindo.Mobile"
              x:Class="Nindo.Mobile.Views.HomePage"
              Title="{Binding Title}">
 
@@ -88,7 +89,7 @@
                                                Text="{Binding Value, Converter={StaticResource longToMetricConverter}}" />
                                     </Grid>
                                     <Frame.GestureRecognizers>
-                                        <TapGestureRecognizer Command="{Binding OpenArtistDetailPageCommand, Source={RelativeSource AncestorType={x:Type viewModels:NavigationAwareViewModelBase}}}"
+                                        <TapGestureRecognizer Command="{Binding OpenArtistOverviewPageCommand, Source={RelativeSource AncestorType={x:Type baseViewModels:NavigationAwareViewModelBase}}}"
                                                               CommandParameter="{Binding .}"/>
                                     </Frame.GestureRecognizers>
                                 </Frame>

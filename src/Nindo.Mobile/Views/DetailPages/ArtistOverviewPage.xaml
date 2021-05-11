@@ -6,8 +6,8 @@
              xmlns:ffimageloading="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
              xmlns:converters="clr-namespace:Nindo.Mobile.Converters;assembly=Nindo.Mobile"
              xmlns:xct="http://xamarin.com/schemas/2020/toolkit"
-             x:Class="Nindo.Mobile.Views.DetailPages.ArtistDetailPage"
-             x:DataType="viewModels:ArtistDetailPageViewModel"
+             x:Class="Nindo.Mobile.Views.DetailPages.ArtistOverviewPage"
+             x:DataType="viewModels:ArtistOverviewPageViewModel"
              Title="{Binding Title}">
 
     <ContentPage.Resources>
@@ -76,6 +76,10 @@
                                                TextColor="{AppThemeBinding Light={StaticResource LightPrimaryTextColor}, Dark={StaticResource DarkPrimaryTextColor}}"
                                                FontSize="17"/>
                                     </Grid>
+                                    <Frame.GestureRecognizers>
+                                        <TapGestureRecognizer Command="{Binding OpenDetailPageCommand, Source={RelativeSource AncestorType={x:Type viewModels:ArtistOverviewPageViewModel}}}"
+                                                              CommandParameter="{Binding .}"/>
+                                    </Frame.GestureRecognizers>
                                 </Frame>
                             </ContentView>
                         </DataTemplate>

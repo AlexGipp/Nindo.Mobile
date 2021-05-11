@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Diagnostics;
 using Nindo.Mobile.Services.Implementations;
 using Nindo.Mobile.ViewModels.DetailPages;
 using Xamarin.Forms;
@@ -12,11 +7,11 @@ using Xamarin.Forms.Xaml;
 namespace Nindo.Mobile.Views.DetailPages
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class ArtistDetailPage : ContentPage
+    public partial class ArtistOverviewPage : ContentPage
     {
-        public ArtistDetailPage(string artistId)
+        public ArtistOverviewPage(string artistId)
         {
-            BindingContext = new ArtistDetailPageViewModel(new ApiService(), artistId);
+            BindingContext = new ArtistOverviewPageViewModel(new ApiService(), new NavigationService(), artistId);
             InitializeComponent();
         }
 
@@ -24,7 +19,7 @@ namespace Nindo.Mobile.Views.DetailPages
         {
             base.OnAppearing();
 
-            if (BindingContext is ArtistDetailPageViewModel vm)
+            if (BindingContext is ArtistOverviewPageViewModel vm)
                 vm.LoadArtistAsync()
                     .ContinueWith(t =>
                     {

@@ -8,7 +8,9 @@ namespace Nindo.Mobile.Services
     {
         Task OpenViralDetailPageAsync(IList<Viral> entries);
 
-        Task OpenArtistDetailPageAsync(string artistId);
+        Task OpenArtistOverviewPageAsync(string artistId);
+
+        Task OpenArtistDetailPageAsync(ArtistChannel artist);
 
         Task OpenSearchPageAsync();
     }

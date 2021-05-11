@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Nindo.Common.Common;
 using Nindo.Mobile.Services;
+using Nindo.Mobile.ViewModels.BaseViewModels;
 using Nindo.Net.Models;
 using Xamarin.CommunityToolkit.ObjectModel;
 using Xamarin.Forms;

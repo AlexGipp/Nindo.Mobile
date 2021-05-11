@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Nindo.Mobile.Models;
+using Nindo.Mobile.ViewModels.BaseViewModels;
 using Nindo.Net.Models;
 
 namespace Nindo.Mobile.ViewModels.DetailPages

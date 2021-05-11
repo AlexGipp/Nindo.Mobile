@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Nindo.Common.Common;
 using Nindo.Mobile.Models;
 using Nindo.Mobile.Services;
+using Nindo.Mobile.ViewModels.BaseViewModels;
 using Nindo.Net.Models;
 using Nindo.Net.Models.Enums;
 using Xamarin.CommunityToolkit.ObjectModel;

@@ -82,5 +82,15 @@ namespace Nindo.Mobile.Services.Implementations
         {
             return _nindoClient.GetArtistInformationAsync(userId);
         }
+
+        public Task<YoutubeChannel> GetYouTubeChannelInformationAsync(string userId)
+        {
+            return _nindoClient.GetYouTubeChannelInformationAsync(userId);
+        }
+
+        public Task<YoutubeChannel[]> GetYouTubeChannelHistoryAsync(string userId)
+        {
+            return _nindoClient.GetYouTubeChannelHistoryAsync(userId);
+        }
     }
 }

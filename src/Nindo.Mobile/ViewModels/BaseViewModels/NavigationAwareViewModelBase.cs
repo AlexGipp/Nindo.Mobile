@@ -1,11 +1,9 @@
 ﻿using System.Threading.Tasks;
 using Nindo.Mobile.Services;
-using Nindo.Mobile.Views;
 using Nindo.Net.Models;
 using Xamarin.CommunityToolkit.ObjectModel;
-using Xamarin.Forms;
 
-namespace Nindo.Mobile.ViewModels
+namespace Nindo.Mobile.ViewModels.BaseViewModels
 {
     public class NavigationAwareViewModelBase : ViewModelBase
     {
@@ -14,7 +12,7 @@ namespace Nindo.Mobile.ViewModels
         #region commands
 
         public IAsyncCommand OpenSearchCommand { get; }
-        public IAsyncCommand<Rank> OpenArtistDetailPageCommand { get; }
+        public IAsyncCommand<Rank> OpenArtistOverviewPageCommand { get; }
 
         #endregion
 
@@ -23,7 +21,7 @@ namespace Nindo.Mobile.ViewModels
             _navigationService = navigationService;
 
             OpenSearchCommand = new AsyncCommand(NavigateToSearchPageAsync, CanExecute);
-            OpenArtistDetailPageCommand = new AsyncCommand<Rank>(NavigateToArtistDetailPageAsync, CanExecute);
+            OpenArtistOverviewPageCommand = new AsyncCommand<Rank>(NavigateToArtistDetailPageAsync, CanExecute);
         }
 
         private async Task NavigateToSearchPageAsync()
@@ -33,7 +31,7 @@ namespace Nindo.Mobile.ViewModels
 
         private async Task NavigateToArtistDetailPageAsync(Rank selectedRank)
         {
-            await _navigationService.OpenArtistDetailPageAsync(selectedRank.ArtistId);
+            await _navigationService.OpenArtistOverviewPageAsync(selectedRank.ArtistId);
         }
 
         private bool CanExecute(object arg)

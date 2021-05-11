@@ -33,5 +33,9 @@ namespace Nindo.Mobile.Services
         public Task<Search[]> SearchUserAsync(string term);
 
         public Task<Artist> GetArtistInformationAsync(string userId);
+
+        public Task<YoutubeChannel> GetYouTubeChannelInformationAsync(string userId);
+
+        Task<YoutubeChannel[]> GetYouTubeChannelHistoryAsync(string userId);
     }
 }
