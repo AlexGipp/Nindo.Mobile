@@ -1,9 +1,6 @@
 ﻿using Nindo.Common.Common;
 using Nindo.Mobile.ViewModels;
 using Nindo.Net.Models;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Nindo.Mobile.Models
 {
@@ -11,9 +8,9 @@ namespace Nindo.Mobile.Models
     {
         public string CouponTitle { get; set; }
 
-        public int pageNumber;
+        public int PageNumber;
 
-        public CouponBrands selectedItem;
+        public CouponBrands SelectedItem;
 
         private RangeObservableCollection<Coupon> _coupons = new RangeObservableCollection<Coupon>();
 
@@ -28,7 +25,6 @@ namespace Nindo.Mobile.Models
         }
 
         private RangeObservableCollection<CouponBrands> _comboboxItems = new RangeObservableCollection<CouponBrands>();
-
         public RangeObservableCollection<CouponBrands> ComboboxItems
         {
             get => _comboboxItems;
@@ -41,7 +37,6 @@ namespace Nindo.Mobile.Models
 
 
         private bool _comboboxIsVisible;
-
         public bool ComboboxIsVisible
         {
             get => _comboboxIsVisible;

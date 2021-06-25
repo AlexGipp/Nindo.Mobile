@@ -17,11 +17,11 @@ namespace Nindo.Mobile.ViewModels
     {
         private readonly IApiService _apiService;
 
-        #region command
+        #region Commands
         public IAsyncCommand RefreshCommand { get; }
-        public IAsyncCommand LoadMoreCouponsCommand { get; set; }
-        public IAsyncCommand<CouponBrands> ComboboxSelectionChangedCommand { get; set; }
-        public IAsyncCommand<Coupon> CollectionViewSelectionChangedCommand { get; set; }
+        public IAsyncCommand LoadMoreCouponsCommand { get; }
+        public IAsyncCommand<CouponBrands> ComboboxSelectionChangedCommand { get; }
+        public IAsyncCommand<Coupon> CollectionViewSelectionChangedCommand { get; }
         #endregion
 
         public CouponViewModel(IApiService apiService)
@@ -30,15 +30,15 @@ namespace Nindo.Mobile.ViewModels
             {
                 new ExtendedCoupon
                 {
-                    CouponTitle = "keine Filter"
+                    CouponTitle = "Keine"
                 },
                 new ExtendedCoupon
                 {
-                    CouponTitle = "Brand Filter"
+                    CouponTitle = "Marken"
                 },
                 new ExtendedCoupon
                 {
-                    CouponTitle = "Category Filter"
+                    CouponTitle = "Kategorien"
                 }
             };
 
@@ -51,22 +51,22 @@ namespace Nindo.Mobile.ViewModels
         }
 
 
-        public void InitLists()
+        private void InitLists()
         {
-            Coupons[0].Coupons = new RangeObservableCollection<Coupon>() { };
-            Coupons[1].Coupons = new RangeObservableCollection<Coupon>() { };
-            Coupons[2].Coupons = new RangeObservableCollection<Coupon>() { };
+            Coupons[0].Coupons = new RangeObservableCollection<Coupon>();
+            Coupons[1].Coupons = new RangeObservableCollection<Coupon>();
+            Coupons[2].Coupons = new RangeObservableCollection<Coupon>();
 
             Coupons[0].ComboboxIsVisible = false;
             Coupons[1].ComboboxIsVisible = true;
             Coupons[2].ComboboxIsVisible = true;
 
-            Coupons[1].ComboboxItems = new RangeObservableCollection<CouponBrands>() { };
-            Coupons[2].ComboboxItems = new RangeObservableCollection<CouponBrands>() { };
+            Coupons[1].ComboboxItems = new RangeObservableCollection<CouponBrands>();
+            Coupons[2].ComboboxItems = new RangeObservableCollection<CouponBrands>();
 
-            Coupons[0].pageNumber = 0;
-            Coupons[1].pageNumber = 0;
-            Coupons[2].pageNumber = 0;
+            Coupons[0].PageNumber = 0;
+            Coupons[1].PageNumber = 0;
+            Coupons[2].PageNumber = 0;
         }
 
         public async Task LoadComboboxItemsAsync()
@@ -76,10 +76,10 @@ namespace Nindo.Mobile.ViewModels
                 var brands = await _apiService.GetCouponBrandsAsync();
                 var categories = await _apiService.GetCouponBranchesAsync();
 
-                RangeObservableCollection<CouponBrands> brandItems = new RangeObservableCollection<CouponBrands>();
+                var brandItems = new RangeObservableCollection<CouponBrands>();
                 brandItems.AddRange(brands);
 
-                RangeObservableCollection<CouponBrands> categoryItems = new RangeObservableCollection<CouponBrands>();
+                var categoryItems = new RangeObservableCollection<CouponBrands>();
                 foreach (var item in categories)
                 {
                     categoryItems.Add(new CouponBrands { Name = item });
@@ -98,7 +98,7 @@ namespace Nindo.Mobile.ViewModels
             Coupons[2].Coupons.AddRange(noFilter.Coupon);
         }
 
-        public async Task ComboboxSelectionChangedAsync(CouponBrands obj)
+        private async Task ComboboxSelectionChangedAsync(CouponBrands couponBrands)
         {
             try
             {
@@ -107,32 +107,24 @@ namespace Nindo.Mobile.ViewModels
                 switch (SelectedTabIndex)
                 {
                     case 1:
-                        if (Coupons[1].ComboboxItems.Contains(obj))
+                        if (Coupons[1].ComboboxItems.Contains(couponBrands))
                         {
                             Coupons[1].Coupons.Clear();
-                            Coupons[1].pageNumber = 0;
-                            hasMore = true;
-                            Coupons[1].selectedItem = obj;
+                            Coupons[1].PageNumber = 0;
+                            _hasMore = true;
+                            Coupons[1].SelectedItem = couponBrands;
                             await LoadCouponsAsync();
-                        }
-                        else
-                        {
-                            return;
                         }
                         break;
 
                     case 2:
-                        if (Coupons[2].ComboboxItems.Contains(obj))
+                        if (Coupons[2].ComboboxItems.Contains(couponBrands))
                         {
                             Coupons[2].Coupons.Clear();
-                            Coupons[2].pageNumber = 0;
-                            hasMore = true;
-                            Coupons[2].selectedItem = obj;
+                            Coupons[2].PageNumber = 0;
+                            _hasMore = true;
+                            Coupons[2].SelectedItem = couponBrands;
                             await LoadCouponsAsync();
-                        }
-                        else
-                        {
-                            return;
                         }
                         break;
                 }
@@ -143,14 +135,14 @@ namespace Nindo.Mobile.ViewModels
             }
         }
 
-        private bool hasMore = true;
-        public async Task LoadCouponsAsync()
+        private bool _hasMore = true;
+        private async Task LoadCouponsAsync()
         {
             try
             {
                 IsBusy = true;
 
-                if (hasMore == true)
+                if (_hasMore)
                 {
                     await Task.Run(() =>
                     {
@@ -158,48 +150,53 @@ namespace Nindo.Mobile.ViewModels
                         switch (SelectedTabIndex)
                         {
                             case 0:
-                                var noFilter = _apiService.GetCouponsAsync(Coupons[0].pageNumber);
+                                var noFilter = _apiService.GetCouponsAsync(Coupons[0].PageNumber);
                                 Coupons[0].Coupons.AddRange(noFilter.Result.Coupon);
-                                if (noFilter.Result.HasMore == "true")
+                                if (noFilter.Result.HasMore)
                                 {
-                                    Coupons[0].pageNumber += 20;
+                                    Coupons[0].PageNumber += 20;
                                 }
                                 else
                                 {
-                                    hasMore = false;
+                                    _hasMore = false;
                                 }
+
                                 break;
 
                             case 1:
-                                if (Coupons[1].selectedItem != null)
+                                if (Coupons[1].SelectedItem != null)
                                 {
-                                    var brandFilter = _apiService.GetCouponsByBranchAsync(Coupons[1].selectedItem.Id, Coupons[1].pageNumber);
+                                    var brandFilter = _apiService.GetCouponsByBranchAsync(Coupons[1].SelectedItem.Id,
+                                        Coupons[1].PageNumber);
                                     Coupons[1].Coupons.AddRange(brandFilter.Result.Coupon);
-                                    if (brandFilter.Result.HasMore == "true")
+                                    if (brandFilter.Result.HasMore)
                                     {
-                                        Coupons[1].pageNumber += 20;
+                                        Coupons[1].PageNumber += 20;
                                     }
                                     else
                                     {
-                                        hasMore = false;
+                                        _hasMore = false;
                                     }
                                 }
+
                                 break;
 
                             case 2:
-                                if (Coupons[2].selectedItem != null)
+                                if (Coupons[2].SelectedItem != null)
                                 {
                                     try
                                     {
-                                        var categoryFilter = _apiService.GetCouponsByCategoryAsync(Coupons[2].selectedItem.Name, Coupons[2].pageNumber);
+                                        var categoryFilter =
+                                            _apiService.GetCouponsByCategoryAsync(Coupons[2].SelectedItem.Name,
+                                                Coupons[2].PageNumber);
                                         Coupons[2].Coupons.AddRange(categoryFilter.Result.Coupon);
-                                        if (categoryFilter.Result.HasMore == "true")
+                                        if (categoryFilter.Result.HasMore)
                                         {
-                                            Coupons[2].pageNumber += 20;
+                                            Coupons[2].PageNumber += 20;
                                         }
                                         else
                                         {
-                                            hasMore = false;
+                                            _hasMore = false;
                                         }
 
                                     }
@@ -208,10 +205,15 @@ namespace Nindo.Mobile.ViewModels
                                         Debug.WriteLine(e);
                                     }
                                 }
+
                                 break;
                         }
                     });
                 }
+            }
+            catch(Exception ex)
+            {
+                
             }
             finally
             {
@@ -219,17 +221,17 @@ namespace Nindo.Mobile.ViewModels
             }
         }
 
-        public async Task CopyCouponCode(Coupon CollectionViewSelectedItem)
+        public async Task CopyCouponCode(Coupon collectionViewSelectedItem)
         {
             try
             {
                 IsBusy = true;
 
-                await Clipboard.SetTextAsync(CollectionViewSelectedItem.Code);
+                await Clipboard.SetTextAsync(collectionViewSelectedItem.Code);
                 var openSite = await Application.Current.MainPage.DisplayAlert("", "Code has been Copied", "Open Website", "Cancel");
-                if (openSite == true)
+                if (openSite)
                 {
-                    await Browser.OpenAsync(CollectionViewSelectedItem.Brand.Url, BrowserLaunchMode.SystemPreferred);
+                    await Browser.OpenAsync(collectionViewSelectedItem.Brand.Url, BrowserLaunchMode.SystemPreferred);
                 }
             }
             finally
@@ -242,22 +244,23 @@ namespace Nindo.Mobile.ViewModels
         {
             try
             {
+                IsRefreshing = true;
+
                 switch (SelectedTabIndex)
                 {
                     case 0:
                         Coupons[0].Coupons.Clear();
-                        Coupons[0].pageNumber = 0;
+                        Coupons[0].PageNumber = 0;
                         break;
                     case 1:
                         Coupons[1].Coupons.Clear();
-                        Coupons[1].pageNumber = 0;
+                        Coupons[1].PageNumber = 0;
                         break;
                     case 2:
                         Coupons[2].Coupons.Clear();
-                        Coupons[2].pageNumber = 0;
+                        Coupons[2].PageNumber = 0;
                         break;
                 }
-                IsRefreshing = true;
 
                 await LoadCouponsAsync();
             }
@@ -273,7 +276,6 @@ namespace Nindo.Mobile.ViewModels
         }
 
         private IList<ExtendedCoupon> _coupons;
-
         public IList<ExtendedCoupon> Coupons
         {
             get => _coupons;
@@ -285,7 +287,6 @@ namespace Nindo.Mobile.ViewModels
         }
 
         private int _selectedTabIndex;
-
         public int SelectedTabIndex
         {
             get => _selectedTabIndex;
@@ -297,7 +298,6 @@ namespace Nindo.Mobile.ViewModels
         }
 
         private bool _isRefreshing;
-
         public bool IsRefreshing
         {
             get => _isRefreshing;

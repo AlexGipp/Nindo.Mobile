@@ -85,7 +85,7 @@ namespace Nindo.Mobile.Services.Implementations
 
         public Task<string[]> GetCouponBranchesAsync()
         {
-            return _nindoClient.GetCouponBranchesAsync();
+            return _nindoClient.GetCouponCategoriesAsync();
         }
 
         public Task<Coupons> GetCouponsByCategoryAsync(string category, int offset)
@@ -95,7 +95,7 @@ namespace Nindo.Mobile.Services.Implementations
 
         public Task<Coupons> GetCouponsByBranchAsync(string id, int offset)
         {
-            return _nindoClient.GetCouponsByBranchAsync(id, offset);
+            return _nindoClient.GetCouponsByBrandAsync(id, offset);
         }
         
         public Task<Search[]> SearchUserAsync(string term)
