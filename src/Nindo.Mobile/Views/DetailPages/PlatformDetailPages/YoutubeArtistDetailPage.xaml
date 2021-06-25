@@ -2,14 +2,65 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:viewModels="clr-namespace:Nindo.Mobile.ViewModels.DetailPages.PlatformDetailPages;assembly=Nindo.Mobile"
+             xmlns:xct="http://xamarin.com/schemas/2020/toolkit"
              x:Class="Nindo.Mobile.Views.DetailPages.PlatformDetailPages.YoutubeArtistDetailPage"
              x:DataType="viewModels:YoutubeArtistDetailPageViewModel"
              Title="{Binding Title}">
     <ContentPage.Content>
-        <StackLayout>
-            <Label Text="Welcome to Xamarin.Forms!"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
+        <StackLayout  BackgroundColor="{AppThemeBinding Light={StaticResource LightBackgroundColor}, Dark={StaticResource DarkBackgroundColor}}" Padding="20" Spacing="15">
+                <Frame BackgroundColor="#ececec" CornerRadius="20" >
+                    <StackLayout>
+                    <StackLayout Orientation="Horizontal">
+                        <Label Text="KANAL" FontSize="20" FontAttributes="Bold" VerticalTextAlignment="Center"/>
+                        <Button Text="YouTube-Kanal" HorizontalOptions="EndAndExpand"/>
+                    </StackLayout>
+                    <StackLayout Orientation="Horizontal" Padding="0, 20">
+                        <StackLayout HorizontalOptions="StartAndExpand">
+                            <Image Source="people_white.png" xct:IconTintColorEffect.TintColor="#ababab"/>
+                            <Label Text="{Binding ChannelInfo.Subscribers}"/>
+                        </StackLayout>
+                        <StackLayout HorizontalOptions="CenterAndExpand">
+                            <Image Source="visibility_white.png" xct:IconTintColorEffect.TintColor="#ababab"/>
+                            <Label Text="{Binding ChannelInfo.SumViewsThirty}" TextColor="#6ad0ad"/>
+                        </StackLayout>
+                        <StackLayout HorizontalOptions="EndAndExpand">
+                            <Image Source="person_add_white.png" xct:IconTintColorEffect.TintColor="#ababab"/>
+                            <Label Text="{Binding ChannelInfo.SubGainThirty}" TextColor="#6ad0ad"/>
+                        </StackLayout>
+                    </StackLayout>
+                    </StackLayout>
+            </Frame>
+            <Frame BackgroundColor="#ececec" CornerRadius="20" >
+                <StackLayout>
+                    <Label Text="PRO VIDEO" FontSize="20" FontAttributes="Bold" VerticalTextAlignment="Center"/>
+                    <Grid ColumnDefinitions="*,*,*,*" Padding="0, 20">
+                        <StackLayout Grid.Column="0">
+                            <Image Source="visibility_white.png" xct:IconTintColorEffect.TintColor="#ababab"/>
+                            <Label Text="{Binding ChannelInfo.AvgViewsFive}" HorizontalTextAlignment="Center"/>
+                        </StackLayout>
+                        <StackLayout Grid.Column="1">
+                            <Image Source="thumbup_white.png" xct:IconTintColorEffect.TintColor="#ababab"/>
+                            <Label Text="{Binding ChannelInfo.AvgLikesFive}" HorizontalTextAlignment="Center"/>
+                        </StackLayout>
+                        <StackLayout Grid.Column="2">
+                            <Image Source="sms_white.png" xct:IconTintColorEffect.TintColor="#ababab"/>
+                            <Label Text="{Binding ChannelInfo.AvgCommentsFive}" HorizontalTextAlignment="Center"/>
+                        </StackLayout>
+                        <StackLayout Grid.Column="3">
+                            <Image Source="thumbdown_white.png" xct:IconTintColorEffect.TintColor="#ababab"/>
+                            <Label Text="{Binding ChannelInfo.AvgDislikesFive}" HorizontalTextAlignment="Center"/>
+                        </StackLayout>
+                    </Grid>
+                </StackLayout>
+            </Frame>
+            <Frame BackgroundColor="#ececec" CornerRadius="20" >
+                <StackLayout>
+                    <Label Text="LETZTE 7 TAGE" FontSize="20" FontAttributes="Bold" VerticalTextAlignment="Center"/>
+                    <StackLayout>
+                        <CollectionView ItemsSource="{Binding ChannelInfo.}"></CollectionView>
+                    </StackLayout>
+                </StackLayout>
+            </Frame>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

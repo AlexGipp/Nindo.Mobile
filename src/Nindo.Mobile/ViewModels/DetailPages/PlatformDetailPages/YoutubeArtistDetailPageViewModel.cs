@@ -16,8 +16,6 @@ namespace Nindo.Mobile.ViewModels.DetailPages.PlatformDetailPages
         {
             _apiService = apiService;
 
-            Title = "Why do i exist?";
-
             ChannelHistory = new RangeObservableCollection<YoutubeChannel>();
         }
 
@@ -26,12 +24,14 @@ namespace Nindo.Mobile.ViewModels.DetailPages.PlatformDetailPages
             try
             {
                 IsBusy = true;
-
+                
                 await Task.Run(async () =>
                 {
                     ChannelInfo = await _apiService.GetYouTubeChannelInformationAsync(userId);
                     ChannelHistory.AddRange(await _apiService.GetYouTubeChannelHistoryAsync(userId));
                 });
+
+                Title = ChannelInfo.Name;
             }
             finally
             {
