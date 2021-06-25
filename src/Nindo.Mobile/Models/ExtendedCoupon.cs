@@ -1,6 +1,5 @@
 ﻿using Nindo.Common.Common;
 using Nindo.Mobile.ViewModels;
-using Nindo.Mobile.ViewModels.BaseViewModels;
 using Nindo.Net.Models;
 
 namespace Nindo.Mobile.Models

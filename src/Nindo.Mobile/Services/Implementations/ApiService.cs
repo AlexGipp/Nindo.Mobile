@@ -113,7 +113,7 @@ namespace Nindo.Mobile.Services.Implementations
             return _nindoClient.GetYouTubeChannelInformationAsync(userId);
         }
 
-        public Task<YoutubeHistoricChannel[]> GetYouTubeChannelHistoryAsync(string userId)
+        public Task<YoutubeChannel[]> GetYouTubeChannelHistoryAsync(string userId)
         {
             return _nindoClient.GetYouTubeChannelHistoryAsync(userId);
         }
