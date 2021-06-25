@@ -33,7 +33,7 @@
         <ShellContent Title="Home" Icon="home.png" ContentTemplate="{DataTemplate local:HomePage}" />
         <ShellContent Title="Charts" Icon="charts.png" ContentTemplate="{DataTemplate local:ChartsPage}" />
         <ShellContent Title="Viral" Icon="viral.png" ContentTemplate="{DataTemplate local:ViralPage}" />
-        <ShellContent Title="Rabatt" Icon="discount.png" ContentTemplate="{DataTemplate local:HomePage}" />
+        <ShellContent Title="Rabatt" Icon="discount.png" ContentTemplate="{DataTemplate local:CouponPage}" />
         <ShellContent Title="Meilensteine" Icon="milestones.png" ContentTemplate="{DataTemplate local:MilestonePage}" />
     </TabBar>
 </Shell>
