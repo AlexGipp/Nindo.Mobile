@@ -1,0 +1,130 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+             xmlns:converters="clr-namespace:Nindo.Mobile.Converters" 
+             xmlns:xct="http://xamarin.com/schemas/2020/toolkit" 
+             xmlns:ffimageloading="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms" 
+             xmlns:models1="clr-namespace:Nindo.Net.Models;assembly=Nindo.Net" 
+             xmlns:viewmodels="clr-namespace:Nindo.Mobile.ViewModels" 
+             xmlns:combobox="clr-namespace:Syncfusion.XForms.ComboBox;assembly=Syncfusion.SfComboBox.XForms" 
+             Shell.NavBarHasShadow="False"
+             x:DataType="viewmodels:CouponViewModel"
+             x:Class="Nindo.Mobile.Views.CouponPage"
+             x:Name="CouponsPage"
+             Title="Coupons">
+
+
+    <ContentPage.Resources>
+        <converters:IconConverter x:Key="IconConverter" />
+        <ResourceDictionary>
+
+            <DataTemplate x:Key="TabViewItemTemplate">
+                <Grid>
+                    <Label
+                        Text="{Binding CouponTitle}"
+                        HorizontalOptions="Center"
+                        VerticalOptions="Center" 
+                        TextColor="White"/>
+                </Grid>
+            </DataTemplate>
+
+            <DataTemplate x:Key="comboboxTemplate">
+                <StackLayout Orientation="Horizontal">
+                    <Label Text="{Binding Name}" TextColor="Black"/>
+                </StackLayout>
+            </DataTemplate>
+
+            <DataTemplate x:Key="TabContentTemplate">
+                <RefreshView Command="{Binding Source={x:Reference CouponsPage}, Path=BindingContext.RefreshCommand}" IsRefreshing="{Binding Source={x:Reference CouponsPage}, Path=BindingContext.IsRefreshing}">
+                    <CollectionView ItemsSource="{Binding Coupons}"
+                                    RemainingItemsThreshold="10" 
+                                    RemainingItemsThresholdReachedCommand="{Binding Source={x:Reference CouponsPage}, Path=BindingContext.LoadMoreCouponsCommand}"
+                                    SelectionMode="Single">
+                        <CollectionView.Header>
+                            <StackLayout VerticalOptions="Start" HorizontalOptions="Start" Padding="30">
+                                <combobox:SfComboBox HeightRequest="40"
+                                                     IsEditableMode="True"
+                                                     AllowFiltering="True"
+                                                     ItemTemplate="{StaticResource comboboxTemplate}"
+                                                     DataSource="{Binding ComboboxItems}"
+                                                     IsVisible="{Binding ComboboxIsVisible}"
+                                                     Watermark="Select an Item"
+                                                     x:Name="boxboi">
+                                    <combobox:SfComboBox.Behaviors>
+                                        <xct:EventToCommandBehavior 
+                                            Command="{Binding Source={x:Reference CouponsPage},Path=BindingContext.ComboboxSelectionChangedCommand}" 
+                                            EventName="SelectionChanged" 
+                                            CommandParameter="{Binding Source={x:Reference boxboi}, Path=SelectedItem}"/>
+                                    </combobox:SfComboBox.Behaviors>
+                                </combobox:SfComboBox>
+                            </StackLayout>
+                        </CollectionView.Header>
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate>
+                                <Frame BorderColor="#eeeeee" Padding="0" x:DataType="models1:Coupon" CornerRadius="0">
+                                    <Grid RowSpacing="0" RowDefinitions="Auto" ColumnDefinitions="80,200,*">
+                                        <ffimageloading:CachedImage Grid.RowSpan="1"
+                                                                                Source="{Binding Artist.Avatar}"
+                                                                                Aspect="AspectFit"
+                                                                                HeightRequest="80"
+                                                                                BitmapOptimizations="True"/>
+                                        <Label
+                                                            Grid.Column="1"
+                                                            Text="{Binding Brand.Name}"
+                                                            FontAttributes="Bold"
+                                                            TextColor="#5a5a5a"
+                                                            Padding="15,0,0,0"
+                                                            VerticalTextAlignment="Center" />
+                                        <Label 
+                                                           Grid.Column="3"
+                                                           FontAttributes="Bold"
+                                                           FontSize="20"
+                                                           TextColor="#8552b4"
+                                                           VerticalTextAlignment="Center"
+                                                           Text="{Binding Discount}"/>
+                                    </Grid>
+                                    <Frame.GestureRecognizers>
+                                        <TapGestureRecognizer Command="{Binding Source={x:Reference CouponsPage}, Path=BindingContext.CollectionViewSelectionChangedCommand}"
+                                                              CommandParameter="{Binding .}"/>
+                                    </Frame.GestureRecognizers>
+                                </Frame>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                        <CollectionView.Footer>
+                            <Grid Padding="0" RowSpacing="0" RowDefinitions="Auto, *" ColumnDefinitions="*">
+                                <ActivityIndicator Grid.Row="0" 
+                                                   HeightRequest="40" 
+                                                   Color="#8552b4" 
+                                                   IsRunning="{Binding Source={x:Reference CouponsPage}, Path=BindingContext.IsBusy}" 
+                                                   IsVisible="{Binding Source={x:Reference CouponsPage}, Path=BindingContext.IsBusy}"/>
+                                <Label
+                                        Grid.Row="1"
+                                        Padding="0,20,0,20"
+                                        FontSize="Small"
+                                        FontAttributes="Bold"
+                                        Text="Tippe auf einen Künstler um Coupon zu kopieren"
+                                        TextColor="LightGray"
+                                        HorizontalTextAlignment="Center"
+                                        VerticalTextAlignment="Center" />
+                            </Grid>
+                        </CollectionView.Footer>
+                    </CollectionView>
+                </RefreshView>
+            </DataTemplate>
+
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <ContentPage.Content>
+        <xct:TabView
+            TabItemsSource="{Binding Coupons}"
+            TabStripPlacement="Top"
+            TabStripBackgroundColor="#8552b4"
+            TabIndicatorColor="White"
+            TabViewItemDataTemplate="{StaticResource TabViewItemTemplate}"
+            TabContentDataTemplate="{StaticResource TabContentTemplate}"
+            SelectedIndex="{Binding SelectedTabIndex}">
+
+        </xct:TabView>
+    </ContentPage.Content>
+</ContentPage>

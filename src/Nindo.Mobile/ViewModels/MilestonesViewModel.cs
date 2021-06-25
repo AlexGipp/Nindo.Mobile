@@ -11,12 +11,12 @@ namespace Nindo.Mobile.ViewModels
 {
     public class MilestonesViewModel : ViewModelBase
     {
+        private readonly IApiService _apiService;
+
         #region command
         public IAsyncCommand RefreshCommand { get; }
 
         #endregion
-
-        private readonly IApiService _apiService;
 
         public MilestonesViewModel(IApiService apiService)
         {

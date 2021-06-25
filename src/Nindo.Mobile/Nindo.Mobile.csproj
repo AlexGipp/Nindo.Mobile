@@ -4,6 +4,15 @@
 		<TargetFramework>netstandard2.1</TargetFramework>
 		<ProduceReferenceAssembly>true</ProduceReferenceAssembly>
 	</PropertyGroup>
+
+	<ItemGroup>
+	  <Compile Remove="Controls\**" />
+	  <Compile Remove="TemplateSelectors\**" />
+	  <EmbeddedResource Remove="Controls\**" />
+	  <EmbeddedResource Remove="TemplateSelectors\**" />
+	  <None Remove="Controls\**" />
+	  <None Remove="TemplateSelectors\**" />
+	</ItemGroup>
   
 	<ItemGroup>
 	  <None Remove="Resources\charts.svg" />
@@ -27,11 +36,13 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Humanizer.Core" Version="2.8.26" />
+		<PackageReference Include="Humanizer.Core" Version="2.11.10" />
 		<PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
-		<PackageReference Include="Nindo.Net" Version="1.0.7" />
+		<PackageReference Include="Nindo.Net" Version="1.0.8" />
 		<PackageReference Include="Refractored.MvvmHelpers" Version="1.6.2" />
 		<PackageReference Include="Resizetizer.NT" Version="0.2.0" />
+		<PackageReference Include="Syncfusion.Licensing" Version="19.1.0.69" />
+		<PackageReference Include="Syncfusion.Xamarin.SfComboBox" Version="19.1.0.69" />
 		<PackageReference Include="Xamarin.CommunityToolkit" Version="1.1.0" />
 		<PackageReference Include="Xamarin.FFImageLoading" Version="2.4.11.982" />
 		<PackageReference Include="Xamarin.FFImageLoading.Forms" Version="2.4.11.982" />
@@ -72,6 +83,18 @@
 		<EmbeddedResource Update="Views\ChartsPage.xaml">
 		  <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
 		</EmbeddedResource>
+		<EmbeddedResource Update="Views\Charts\InstagramChartsView.xaml">
+		  <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+		</EmbeddedResource>
+		<EmbeddedResource Update="Views\Charts\TiktokChartsView.xaml">
+		  <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+		</EmbeddedResource>
+		<EmbeddedResource Update="Views\Charts\YoutubeChartsView.xaml">
+		  <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+		</EmbeddedResource>
+		<EmbeddedResource Update="Views\CouponPage.xaml">
+		  <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+		</EmbeddedResource>
 		<EmbeddedResource Update="Views\HomePage.xaml">
 			<Generator>MSBuild:UpdateDesignTimeXaml</Generator>
 		</EmbeddedResource>
@@ -92,8 +115,5 @@
 	<ItemGroup>
 	  <ProjectReference Include="..\Nindo.Common\Nindo.Common.csproj" />
 	</ItemGroup>
-
-	<ItemGroup>
-	  <Folder Include="Controls\" />
-	</ItemGroup>
 </Project> 
+
