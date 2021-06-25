@@ -13,14 +13,15 @@ namespace Nindo.Mobile.ViewModels
 {
     public class MilestonesViewModel : NavigationAwareViewModelBase
     {
-        private readonly IApiService _apiService;
+        #region Commands
 
-        #region command
         public IAsyncCommand RefreshCommand { get; }
 
         #endregion
 
-        public MilestonesViewModel(IApiService apiService)
+        private readonly IApiService _apiService;
+
+        public MilestonesViewModel(IApiService apiService, INavigationService navigationService) : base(navigationService)
         {
             Milestones = new[]
             {
