@@ -16,7 +16,7 @@ namespace Nindo.Mobile.ViewModels.DetailPages.PlatformDetailPages
         {
             _apiService = apiService;
 
-            ChannelHistory = new RangeObservableCollection<YoutubeChannel>();
+            ChannelHistory = new RangeObservableCollection<YoutubeHistoricChannel>();
         }
 
         public async Task GetYoutubeDataAsync(string userId)
@@ -53,9 +53,9 @@ namespace Nindo.Mobile.ViewModels.DetailPages.PlatformDetailPages
             }
         }
 
-        private RangeObservableCollection<YoutubeChannel> _channelHistory;
+        private RangeObservableCollection<YoutubeHistoricChannel> _channelHistory;
 
-        public RangeObservableCollection<YoutubeChannel> ChannelHistory
+        public RangeObservableCollection<YoutubeHistoricChannel> ChannelHistory
         {
             get => _channelHistory;
             set

@@ -46,6 +46,6 @@ namespace Nindo.Mobile.Services
 
         public Task<YoutubeChannel> GetYouTubeChannelInformationAsync(string userId);
 
-        Task<YoutubeChannel[]> GetYouTubeChannelHistoryAsync(string userId);
+        Task<YoutubeHistoricChannel[]> GetYouTubeChannelHistoryAsync(string userId);
     }
 }
