@@ -32,7 +32,7 @@ namespace Nindo.Mobile.ViewModels.DetailPages.PlatformDetailPages
                 {
                     ChannelInfo = await _apiService.GetYouTubeChannelInformationAsync(userId);
                     ChannelHistory.AddRange(await _apiService.GetYouTubeChannelHistoryAsync(userId));
-                    calculateDifference();
+                    CalculateDifference();
                 });
 
                 Title = ChannelInfo.Name;
@@ -43,27 +43,34 @@ namespace Nindo.Mobile.ViewModels.DetailPages.PlatformDetailPages
             }
         }
 
-        public void generateLastSevenDaysList()
+        public void GenerateLastSevenDaysList()
         {
 
         }
 
-        public void calculateDifference()
+        public void CalculateDifference()
         {
-            var items = ChannelHistory.Reverse().Take(7).ToList();
-            YoutubeHistoricChannel previousItem = items.First();
-
-            for (int i = 0; i <= 7; i++)
+            try
             {
-                YtChannelHistory listItem = new YtChannelHistory
+                var items = ChannelHistory.Reverse().Take(7).ToList();
+                var previousItem = items.First();
+
+                for (int i = 0; i <= 7; i++)
                 {
-                    Difference = previousItem.Followers - items[i].Followers,
-                    Follower = items[i].Followers,
-                    Timestamp = items[i].Timestamp.ToString("dd.MM"),
-                    Views = previousItem.Views - items[i].Views
-                };
-                LastSevenDays.Add(listItem);
-                previousItem = items[i];
+                    var listItem = new YtChannelHistory
+                    {
+                        Difference = previousItem.Followers - items[1 + i].Followers,
+                        Follower = items[1 + i].Followers,
+                        Timestamp = items[i].Timestamp.ToString("dd.MM"),
+                        Views = previousItem.Views - items[1 + i].Views
+                    };
+                    LastSevenDays.Add(listItem);
+                    previousItem = items[i];
+                }
+            }
+            catch(Exception ex)
+            {
+                throw new Exception(ex.Message);
             }
         }
 

@@ -12,7 +12,8 @@ namespace Nindo.Mobile.Converters
         {
             if (value == null)
                 return null;
-            return System.Convert.ToDouble(value).ToMetric(decimals: 1);
+            var number = (ulong)value;
+            return System.Convert.ToDouble(number).ToMetric(decimals: 1);
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

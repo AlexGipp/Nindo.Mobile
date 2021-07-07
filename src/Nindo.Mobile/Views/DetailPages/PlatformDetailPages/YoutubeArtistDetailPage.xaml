@@ -58,9 +58,9 @@
                     </Grid>
                 </StackLayout>
             </Frame>
-            <Frame BackgroundColor="#ececec" CornerRadius="20" >
+            <Frame BackgroundColor="#ececec" CornerRadius="20" Padding="0">
                 <StackLayout>
-                    <Label Text="LETZTE 7 TAGE" FontSize="20" FontAttributes="Bold" VerticalTextAlignment="Center"/>
+                    <Label Text="LETZTE 7 TAGE" FontSize="20" FontAttributes="Bold" VerticalTextAlignment="Center"  Padding="20,20,20,5"/>
                     <CollectionView ItemsSource="{Binding LastSevenDays}">
                         <CollectionView.Header>
                             <Grid Padding="0" RowSpacing="0" ColumnDefinitions="*,*,*">
@@ -76,18 +76,12 @@
                         </CollectionView.Header>
                         <CollectionView.ItemTemplate>
                             <DataTemplate>
-                                <Frame 
-                                        BorderColor="{AppThemeBinding Light={StaticResource LightFrameColor}, Dark={StaticResource DarkFrameColor}}" 
-                                        BackgroundColor="{AppThemeBinding Light={StaticResource LightBackgroundColor}, Dark={StaticResource DarkBackgroundColor}}" 
-                                        Padding="0" 
-                                        x:DataType="models:YtChannelHistory"
-                                        CornerRadius="0">
-                                    <Grid Padding="0" RowSpacing="0" ColumnDefinitions="*,*">
-                                        <Label 
-                                                        Grid.Column="0"
-                                                        TextColor="{AppThemeBinding Light={StaticResource LightPrimaryTextColor}, Dark={StaticResource DarkPrimaryTextColor}}"
-                                                        VerticalTextAlignment="Center"
-                                                        Text="{Binding Timestamp}" />
+                                <Grid Padding="0,5,0,0" RowSpacing="0" ColumnDefinitions="*,*" Margin="0" x:DataType="models:YtChannelHistory">
+                                        <Label Grid.Column="0"
+                                               Padding="10,0,0,0"
+                                               TextColor="{AppThemeBinding Light={StaticResource LightPrimaryTextColor}, Dark={StaticResource DarkPrimaryTextColor}}"
+                                               VerticalTextAlignment="Center"
+                                               Text="{Binding Timestamp}" />
                                         <StackLayout Grid.Column="1" Orientation="Horizontal">
                                             <Label Text="{Binding Follower, Converter={StaticResource longToMetricConverter}}"/>
                                             <Label Text=" | +"/>
@@ -97,8 +91,14 @@
                                             <Label Text="+"/>
                                             <Label Text="{Binding Views, Converter={StaticResource longToMetricConverter}}"/>
                                         </StackLayout>
-                                    </Grid>
-                                </Frame>
+                                    <BoxView   VerticalOptions="Center" 
+                                               Grid.Row="1"
+                                               Grid.ColumnSpan="3"
+                                               HorizontalOptions="Center"
+                                               HeightRequest="1"
+                                               WidthRequest="500"
+                                               Color="#5b5d68"/>
+                                </Grid>
                             </DataTemplate>
                         </CollectionView.ItemTemplate>
                     </CollectionView>
