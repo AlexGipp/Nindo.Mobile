@@ -5,6 +5,8 @@ using Nindo.Common.Common;
 using Nindo.Mobile.Services;
 using Nindo.Mobile.ViewModels.BaseViewModels;
 using Nindo.Net.Models;
+using Nindo.Mobile.Models;
+using System.Linq;
 
 namespace Nindo.Mobile.ViewModels.DetailPages.PlatformDetailPages
 {
@@ -17,6 +19,7 @@ namespace Nindo.Mobile.ViewModels.DetailPages.PlatformDetailPages
             _apiService = apiService;
 
             ChannelHistory = new RangeObservableCollection<YoutubeHistoricChannel>();
+            LastSevenDays = new RangeObservableCollection<YtChannelHistory>();
         }
 
         public async Task GetYoutubeDataAsync(string userId)
@@ -24,11 +27,12 @@ namespace Nindo.Mobile.ViewModels.DetailPages.PlatformDetailPages
             try
             {
                 IsBusy = true;
-                
+
                 await Task.Run(async () =>
                 {
                     ChannelInfo = await _apiService.GetYouTubeChannelInformationAsync(userId);
                     ChannelHistory.AddRange(await _apiService.GetYouTubeChannelHistoryAsync(userId));
+                    calculateDifference();
                 });
 
                 Title = ChannelInfo.Name;
@@ -36,6 +40,30 @@ namespace Nindo.Mobile.ViewModels.DetailPages.PlatformDetailPages
             finally
             {
                 IsBusy = false;
+            }
+        }
+
+        public void generateLastSevenDaysList()
+        {
+
+        }
+
+        public void calculateDifference()
+        {
+            var items = ChannelHistory.Reverse().Take(7).ToList();
+            YoutubeHistoricChannel previousItem = items.First();
+
+            for (int i = 0; i <= 7; i++)
+            {
+                YtChannelHistory listItem = new YtChannelHistory
+                {
+                    Difference = previousItem.Followers - items[i].Followers,
+                    Follower = items[i].Followers,
+                    Timestamp = items[i].Timestamp.ToString("dd.MM"),
+                    Views = previousItem.Views - items[i].Views
+                };
+                LastSevenDays.Add(listItem);
+                previousItem = items[i];
             }
         }
 
@@ -65,6 +93,17 @@ namespace Nindo.Mobile.ViewModels.DetailPages.PlatformDetailPages
             }
         }
 
+        private RangeObservableCollection<YtChannelHistory> _lastSevenDays;
+
+        public RangeObservableCollection<YtChannelHistory> LastSevenDays
+        {
+            get => _lastSevenDays;
+            set
+            {
+                _lastSevenDays = value;
+                OnPropertyChanged();
+            }
+        }
         #endregion
     }
 }

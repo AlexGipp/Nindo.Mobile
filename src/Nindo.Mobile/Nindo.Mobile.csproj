@@ -50,7 +50,7 @@
 	<ItemGroup>
 		<PackageReference Include="Humanizer.Core" Version="2.11.10" />
 		<PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
-		<PackageReference Include="Nindo.Net" Version="1.0.8" />
+		<PackageReference Include="Nindo.Net" Version="1.1.0" />
 		<PackageReference Include="Refractored.MvvmHelpers" Version="1.6.2" />
 		<PackageReference Include="Resizetizer.NT" Version="0.2.0" />
 		<PackageReference Include="Syncfusion.Licensing" Version="19.1.0.69" />

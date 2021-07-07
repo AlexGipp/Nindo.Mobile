@@ -5,6 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Nindo.Net" Version="1.1.0" />
     <PackageReference Include="Syncfusion.Licensing" Version="19.1.0.69" />
     <PackageReference Include="Syncfusion.Xamarin.SfComboBox" Version="19.1.0.69" />
   </ItemGroup>
