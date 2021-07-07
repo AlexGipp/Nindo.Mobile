@@ -43,29 +43,24 @@ namespace Nindo.Mobile.ViewModels.DetailPages.PlatformDetailPages
             }
         }
 
-        public void GenerateLastSevenDaysList()
-        {
-
-        }
-
         public void CalculateDifference()
         {
             try
             {
-                var items = ChannelHistory.Reverse().Take(7).ToList();
+                var items = ChannelHistory.Reverse().Take(8).ToList();
                 var previousItem = items.First();
 
-                for (int i = 0; i <= 7; i++)
+                for (int i = 0; i <= 8; i++)
                 {
                     var listItem = new YtChannelHistory
                     {
                         Difference = previousItem.Followers - items[1 + i].Followers,
-                        Follower = items[1 + i].Followers,
+                        Follower = items[i].Followers,
                         Timestamp = items[i].Timestamp.ToString("dd.MM"),
                         Views = previousItem.Views - items[1 + i].Views
                     };
                     LastSevenDays.Add(listItem);
-                    previousItem = items[i];
+                    previousItem = items[1 + i];
                 }
             }
             catch(Exception ex)
