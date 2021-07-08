@@ -8,7 +8,8 @@
              Title="{Binding Title}">
 
     <ContentPage.Resources>
-        <converters:UMetricConverter x:Key="longToMetricConverter" />
+        <converters:UMetricConverter x:Key="ulongToMetricConverter" />
+        <converters:MetricConverter x:Key="longToMetricConverter" />
     </ContentPage.Resources>
 
     <ContentPage.Content>
@@ -19,77 +20,79 @@
                         <Label Text="KANAL" FontSize="20" FontAttributes="Bold" VerticalTextAlignment="Center"/>
                         <Button Text="YouTube-Kanal" HorizontalOptions="EndAndExpand"/>
                     </StackLayout>
-                    <StackLayout Orientation="Horizontal" Padding="0, 20">
-                        <StackLayout HorizontalOptions="StartAndExpand">
+                    <StackLayout Orientation="Horizontal" Padding="0, 20" HorizontalOptions="CenterAndExpand" Spacing="70">
+                        <StackLayout HorizontalOptions="Start">
                             <Image Source="people_white.png" xct:IconTintColorEffect.TintColor="#ababab"/>
-                            <Label Text="{Binding ChannelInfo.Subscribers}"/>
+                            <Label Text="{Binding ChannelInfo.Subscribers, Converter={StaticResource ulongToMetricConverter}}"/>
                         </StackLayout>
-                        <StackLayout HorizontalOptions="CenterAndExpand">
+                        <StackLayout HorizontalOptions="Center">
                             <Image Source="visibility_white.png" xct:IconTintColorEffect.TintColor="#ababab"/>
-                            <Label Text="{Binding ChannelInfo.SumViewsThirty}" TextColor="#6ad0ad"/>
+                            <Label Text="{Binding ChannelInfo.SumViewsThirty, Converter={StaticResource ulongToMetricConverter}}" TextColor="#6ad0ad"/>
                         </StackLayout>
-                        <StackLayout HorizontalOptions="EndAndExpand">
+                        <StackLayout HorizontalOptions="End">
                             <Image Source="person_add_white.png" xct:IconTintColorEffect.TintColor="#ababab"/>
-                            <Label Text="{Binding ChannelInfo.SubGainThirty}" TextColor="#6ad0ad"/>
+                            <Label Text="{Binding ChannelInfo.SubGainThirty, Converter={StaticResource longToMetricConverter}}" TextColor="#6ad0ad"/>
                         </StackLayout>
                     </StackLayout>
                 </StackLayout>
             </Frame>
             <Frame BackgroundColor="#ececec" CornerRadius="20" >
-                <StackLayout>
+                <StackLayout Padding="0,0,0,20">
                     <Label Text="PRO VIDEO" FontSize="20" FontAttributes="Bold" VerticalTextAlignment="Center"/>
                     <Grid ColumnDefinitions="*,*,*,*" Padding="0, 20">
                         <StackLayout Grid.Column="0">
                             <Image Source="visibility_white.png" xct:IconTintColorEffect.TintColor="#ababab"/>
-                            <Label Text="{Binding ChannelInfo.AvgViewsFive}" HorizontalTextAlignment="Center"/>
+                            <Label Text="{Binding ChannelInfo.AvgViewsFive, Converter={StaticResource ulongToMetricConverter}}" HorizontalTextAlignment="Center"/>
                         </StackLayout>
                         <StackLayout Grid.Column="1">
                             <Image Source="thumbup_white.png" xct:IconTintColorEffect.TintColor="#ababab"/>
-                            <Label Text="{Binding ChannelInfo.AvgLikesFive}" HorizontalTextAlignment="Center"/>
+                            <Label Text="{Binding ChannelInfo.AvgLikesFive, Converter={StaticResource ulongToMetricConverter}}" HorizontalTextAlignment="Center"/>
                         </StackLayout>
                         <StackLayout Grid.Column="2">
                             <Image Source="sms_white.png" xct:IconTintColorEffect.TintColor="#ababab"/>
-                            <Label Text="{Binding ChannelInfo.AvgCommentsFive}" HorizontalTextAlignment="Center"/>
+                            <Label Text="{Binding ChannelInfo.AvgCommentsFive, Converter={StaticResource ulongToMetricConverter}}" HorizontalTextAlignment="Center"/>
                         </StackLayout>
                         <StackLayout Grid.Column="3">
                             <Image Source="thumbdown_white.png" xct:IconTintColorEffect.TintColor="#ababab"/>
-                            <Label Text="{Binding ChannelInfo.AvgDislikesFive}" HorizontalTextAlignment="Center"/>
+                            <Label Text="{Binding ChannelInfo.AvgDislikesFive, Converter={StaticResource ulongToMetricConverter}}" HorizontalTextAlignment="Center"/>
                         </StackLayout>
                     </Grid>
                 </StackLayout>
             </Frame>
             <Frame BackgroundColor="#ececec" CornerRadius="20" Padding="0">
                 <StackLayout>
-                    <Label Text="LETZTE 7 TAGE" FontSize="20" FontAttributes="Bold" VerticalTextAlignment="Center"  Padding="20,20,20,5"/>
+                    <Label Text="LETZTE 7 TAGE" FontSize="20" FontAttributes="Bold" VerticalTextAlignment="Center"  Padding="20,20,20,10"/>
                     <CollectionView ItemsSource="{Binding LastSevenDays}">
                         <CollectionView.Header>
                             <Grid Padding="0" RowSpacing="0" ColumnDefinitions="*,*,*">
                                 <Label Grid.Column="1"
                                        TextColor="{AppThemeBinding Light={StaticResource LightPrimaryTextColor}, Dark={StaticResource DarkPrimaryTextColor}}"
                                        VerticalTextAlignment="Center"
-                                       Text="Abos"/>
+                                       FontAttributes="Bold"
+                                       Text="Abos" />
                                 <Label Grid.Column="2" 
                                        TextColor="{AppThemeBinding Light={StaticResource LightPrimaryTextColor}, Dark={StaticResource DarkPrimaryTextColor}}"
                                        VerticalTextAlignment="Center"
+                                       FontAttributes="Bold"
                                        Text="Views"/>
                             </Grid>
                         </CollectionView.Header>
                         <CollectionView.ItemTemplate>
                             <DataTemplate>
-                                <Grid Padding="0,5,0,0" RowSpacing="0" ColumnDefinitions="*,*" Margin="0" x:DataType="models:YtChannelHistory">
+                                <Grid Padding="0,10,0,0" RowSpacing="0" ColumnDefinitions="*,*" Margin="0" x:DataType="models:YtChannelHistory">
                                         <Label Grid.Column="0"
                                                Padding="10,0,0,0"
                                                TextColor="{AppThemeBinding Light={StaticResource LightPrimaryTextColor}, Dark={StaticResource DarkPrimaryTextColor}}"
                                                VerticalTextAlignment="Center"
                                                Text="{Binding Timestamp}" />
                                         <StackLayout Grid.Column="1" Orientation="Horizontal">
-                                            <Label Text="{Binding Follower, Converter={StaticResource longToMetricConverter}}"/>
+                                            <Label Text="{Binding Follower, Converter={StaticResource ulongToMetricConverter}}"/>
                                             <Label Text=" | +"/>
                                             <Label Text="{Binding Difference}"/>
                                         </StackLayout>
                                         <StackLayout Grid.Column="2" Orientation="Horizontal">
                                             <Label Text="+"/>
-                                            <Label Text="{Binding Views, Converter={StaticResource longToMetricConverter}}"/>
+                                            <Label Text="{Binding Views, Converter={StaticResource ulongToMetricConverter}}"/>
                                         </StackLayout>
                                     <BoxView   VerticalOptions="Center" 
                                                Grid.Row="1"
@@ -97,7 +100,7 @@
                                                HorizontalOptions="Center"
                                                HeightRequest="1"
                                                WidthRequest="500"
-                                               Color="#5b5d68"/>
+                                               Color="#ababab"/>
                                 </Grid>
                             </DataTemplate>
                         </CollectionView.ItemTemplate>
