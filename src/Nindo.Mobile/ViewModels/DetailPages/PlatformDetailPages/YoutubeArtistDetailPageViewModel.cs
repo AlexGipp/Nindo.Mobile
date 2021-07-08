@@ -32,10 +32,12 @@ namespace Nindo.Mobile.ViewModels.DetailPages.PlatformDetailPages
                 {
                     ChannelInfo = await _apiService.GetYouTubeChannelInformationAsync(userId);
                     ChannelHistory.AddRange(await _apiService.GetYouTubeChannelHistoryAsync(userId));
-                    CalculateDifference();
                 });
 
                 Title = ChannelInfo.Name;
+
+                CalculateDifference();
+
             }
             finally
             {
